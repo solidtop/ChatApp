@@ -1,1 +1,0 @@
-D:\ChatApp\chatapp.client\obj\Debug\chatapp.client.esproj.CoreCompileInputs.cache
