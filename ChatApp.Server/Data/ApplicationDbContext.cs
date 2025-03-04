@@ -1,4 +1,4 @@
-﻿using ChatApp.Server.Features.Identity;
+﻿using ChatApp.Server.Features.Auth;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

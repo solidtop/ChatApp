@@ -1,6 +1,5 @@
 using ChatApp.Server.Data;
-using ChatApp.Server.Features.Identity;
-using Microsoft.AspNetCore.Identity;
+using ChatApp.Server.Features.Auth;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,11 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddAuthorization();
-builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationScheme);
 
-builder.Services.AddIdentityCore<ApplicationUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddApiEndpoints();
+builder.Services.AddAuthenticationServices();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -36,7 +32,6 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapIdentityApi<ApplicationUser>();
 
 app.Run();
 
