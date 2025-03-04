@@ -27,6 +27,11 @@ public class AuthService(UserManager<ApplicationUser> userManager, SignInManager
             return SignInResult.Failed;
         }
 
-        return await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
+        return await _signInManager.PasswordSignInAsync(user, request.Password, isPersistent: true, lockoutOnFailure: false);
+    }
+
+    public async Task LogoutAsync()
+    {
+        await _signInManager.SignOutAsync();
     }
 }

@@ -10,9 +10,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
-builder.Services.AddAuthorization();
-
 builder.Services.AddAuthenticationServices();
+builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -29,7 +29,10 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseCookiePolicy();
+app.UseHttpsRedirection();
 
 app.MapControllers();
 
