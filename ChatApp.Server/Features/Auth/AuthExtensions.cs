@@ -25,6 +25,21 @@ public static class AuthExtensions
             options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             options.Cookie.SameSite = SameSiteMode.None;
             options.ExpireTimeSpan = TimeSpan.FromDays(7);
+            options.SlidingExpiration = true;
+
+            options.Events = new()
+            {
+                OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                },
+                OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                }
+            };
         });
 
         return services;
