@@ -15,7 +15,14 @@ public class AuthService(UserManager<ApplicationUser> userManager, SignInManager
             Email = request.Email,
         };
 
-        return await _userManager.CreateAsync(newUser, request.Password);
+        var result = await _userManager.CreateAsync(newUser, request.Password);
+
+        if (!result.Succeeded)
+        {
+            return result;
+        }
+
+        return await _userManager.AddToRoleAsync(newUser, "User");
     }
 
     public async Task<SignInResult> LoginAsync(LoginRequest request)

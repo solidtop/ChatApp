@@ -44,4 +44,58 @@ public static class AuthExtensions
 
         return services;
     }
+
+    public static async Task<IServiceProvider> SeedRolesAsync(this IServiceProvider services)
+    {
+        using (var scope = services.CreateScope())
+        {
+            var roleManager =
+                scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            var roles = new[] { "Admin", "Moderator", "User" };
+
+            foreach (var role in roles)
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                    await roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
+
+        return services;
+    }
+
+    public static async Task<IServiceProvider> SeedAdminAsync(this IServiceProvider services)
+    {
+        using (var scope = services.CreateScope())
+        {
+            var userManager =
+                scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
+            var username = config["AdminCredentials:Username"];
+            var email = config["AdminCredentials:Email"];
+            var password = config["AdminCredentials:Password"];
+
+            if (string.IsNullOrWhiteSpace(username) ||
+                string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password))
+            {
+                return services;
+            }
+
+            if (await userManager.FindByEmailAsync(email) == null)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = username,
+                    Email = email
+                };
+
+                await userManager.CreateAsync(user, password);
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
+        }
+
+        return services;
+    }
 }
