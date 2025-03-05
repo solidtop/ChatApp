@@ -1,8 +1,13 @@
 using ChatApp.Server.Data;
-using ChatApp.Server.Features.Auth;
+using ChatApp.Server.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDevCorsPolicy();
+}
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -30,6 +35,8 @@ if (app.Environment.IsDevelopment())
 
     await app.Services.SeedRolesAsync();
     await app.Services.SeedAdminAsync();
+
+    app.UseCors("DevCorsPolicy");
 }
 
 app.UseAuthentication();

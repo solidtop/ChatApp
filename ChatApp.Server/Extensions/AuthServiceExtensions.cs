@@ -1,9 +1,10 @@
 ﻿using ChatApp.Server.Data;
+using ChatApp.Server.Features.Auth;
 using Microsoft.AspNetCore.Identity;
 
-namespace ChatApp.Server.Features.Auth;
+namespace ChatApp.Server.Extensions;
 
-public static class AuthExtensions
+public static class AuthServiceExtensions
 {
     public static IServiceCollection AddAuthenticationServices(this IServiceCollection services)
     {
