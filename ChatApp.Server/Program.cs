@@ -1,5 +1,6 @@
 using ChatApp.Server.Data;
 using ChatApp.Server.Extensions;
+using ChatApp.Server.Features.Account;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,8 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();
 
