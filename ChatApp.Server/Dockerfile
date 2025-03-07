@@ -19,20 +19,20 @@ RUN npm install -g @angular/cli
 FROM with-node AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DockerTest2.Server/DockerTest2.Server.csproj", "DockerTest2.Server/"]
-COPY ["dockertest2.client/dockertest2.client.esproj", "dockertest2.client/"]
-RUN dotnet restore "./DockerTest2.Server/DockerTest2.Server.csproj"
+COPY ["ChatApp.Server/ChatApp.Server.csproj", "ChatApp.Server/"]
+COPY ["chatapp.client/chatapp.client.esproj", "chatapp.client/"]
+RUN dotnet restore "./ChatApp.Server/ChatApp.Server.csproj"
 COPY . .
-WORKDIR "/src/DockerTest2.Server"
-RUN dotnet build "./DockerTest2.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/ChatApp.Server"
+RUN dotnet build "./ChatApp.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./DockerTest2.Server.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./ChatApp.Server.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DockerTest2.Server.dll"]
+ENTRYPOINT ["dotnet", "ChatApp.Server.dll"]
