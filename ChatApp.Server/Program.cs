@@ -1,6 +1,8 @@
+using ChatApp.Server.Common.Exceptions;
 using ChatApp.Server.Data;
 using ChatApp.Server.Extensions;
 using ChatApp.Server.Features.Account;
+using ChatApp.Server.Features.Users;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +25,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
+builder.Services.AddExceptionHandler<ApiExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
