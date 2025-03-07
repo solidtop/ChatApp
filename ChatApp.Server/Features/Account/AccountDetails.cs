@@ -9,7 +9,7 @@ public record AccountDetails(
     IList<string> Roles
     )
 {
-    public static AccountDetails From(ApplicationUser user, IList<string> roles)
+    public static AccountDetails FromUser(ApplicationUser user, IList<string> roles)
     {
         return new AccountDetails(
             user.Id,

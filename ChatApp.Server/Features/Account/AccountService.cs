@@ -19,6 +19,6 @@ public class AccountService(UserManager<ApplicationUser> userManager) : IAccount
 
         var roles = await _userManager.GetRolesAsync(user);
 
-        return AccountDetails.From(user, roles);
+        return AccountDetails.FromUser(user, roles);
     }
 }

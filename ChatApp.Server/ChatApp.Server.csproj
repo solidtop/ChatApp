@@ -36,9 +36,4 @@
     </ProjectReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Features\Users\" />
-  </ItemGroup>
-
 </Project>
