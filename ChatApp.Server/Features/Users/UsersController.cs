@@ -6,13 +6,14 @@ namespace ChatApp.Server.Features.Users;
 
 [ApiController]
 [Authorize]
+[ProducesResponseType(StatusCodes.Status200OK)]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [Route("api/[controller]")]
 public class UsersController(IUserService userService) : ControllerBase
 {
     private readonly IUserService _userService = userService;
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<List<UserSummary>>> GetUserSummaries()
     {
         var summaries = await _userService.GetUserSummaries();
@@ -20,7 +21,6 @@ public class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserDetails>> GetUserDetails(string id)
     {

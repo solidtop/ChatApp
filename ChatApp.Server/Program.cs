@@ -2,6 +2,7 @@ using ChatApp.Server.Common.Exceptions;
 using ChatApp.Server.Data;
 using ChatApp.Server.Extensions;
 using ChatApp.Server.Features.Account;
+using ChatApp.Server.Features.Avatars;
 using ChatApp.Server.Features.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +31,7 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAvatarService, AvatarService>();
 
 var app = builder.Build();
 
