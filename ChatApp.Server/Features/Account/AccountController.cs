@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using ChatApp.Server.Common.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,8 +24,7 @@ public class AccountController(IAccountService accountService) : ControllerBase
             return Unauthorized();
         }
 
-        var details = await _accountService.GetAccountDetailsAsync(userId);
-
-        return Ok(details);
+        var result = await _accountService.GetAccountDetailsAsync(userId);
+        return result.Match(Ok, ApiResults.Problem);
     }
 }
