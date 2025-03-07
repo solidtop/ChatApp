@@ -5,5 +5,5 @@ namespace ChatApp.Server.Features.Users;
 public static class UserErrors
 {
     public static Error NotFound(string userId) => new(
-        ErrorType.NotFound, $"User with id {userId} not found");
+        ErrorType.NotFound, ErrorMessages.NotFound("User", userId));
 }
