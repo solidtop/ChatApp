@@ -13,6 +13,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, SignInManager
         {
             UserName = request.Username,
             Email = request.Email,
+            AvatarId = 1
         };
 
         var result = await _userManager.CreateAsync(newUser, request.Password);
