@@ -7,6 +7,7 @@ public record UserDetails(
     string Id,
     string? Username,
     IList<string> Roles,
+    string? DisplayColor,
     Avatar? Avatar
     )
 {
@@ -16,6 +17,7 @@ public record UserDetails(
             user.Id,
             user.UserName,
             roles,
+            user.DisplayColor,
             user.Avatar
             );
     }

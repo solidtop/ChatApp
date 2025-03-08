@@ -8,8 +8,8 @@ namespace ChatApp.Server.Features.Avatars;
 [Authorize]
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-[Route("api/[controller]")]
-public class AvatarsController(IAvatarService avatarService) : ControllerBase
+[Route("api/avatars")]
+public class AvatarController(IAvatarService avatarService) : ControllerBase
 {
     private readonly IAvatarService _avatarService = avatarService;
 

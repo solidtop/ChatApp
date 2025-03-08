@@ -5,6 +5,7 @@ namespace ChatApp.Server.Features.Users;
 public record UserSummary(
     string Id,
     string? Username,
+    string? DisplayColor,
     string? AvatarImageUrl
     )
 {
@@ -13,6 +14,7 @@ public record UserSummary(
         return new UserSummary(
             user.Id,
             user.UserName,
+            user.DisplayColor,
             user.Avatar?.ImageUrl
             );
     }

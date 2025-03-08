@@ -1,5 +1,6 @@
 ﻿using ChatApp.Server.Common.Results;
 using ChatApp.Server.Data;
+using ChatApp.Server.Extensions;
 using ChatApp.Server.Features.Auth;
 using ChatApp.Server.Features.Avatars;
 using ChatApp.Server.Features.Users;
@@ -26,6 +27,21 @@ public class AccountService(UserManager<ApplicationUser> userManager, Applicatio
         return AccountDetails.FromUser(user, roles);
     }
 
+    public async Task<Result> UpdateDisplayColorAsync(string userId, string color)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user is null)
+        {
+            return Result.Fail(UserErrors.NotFound(userId));
+        }
+
+        user.DisplayColor = color;
+
+        var updateResult = await _userManager.UpdateAsync(user);
+        return updateResult.ToResult();
+    }
+
     public async Task<Result> UpdateAvatarAsync(string userId, int avatarId)
     {
         var avatar = await _context.Avatars.FindAsync(avatarId);
@@ -45,13 +61,6 @@ public class AccountService(UserManager<ApplicationUser> userManager, Applicatio
         user.AvatarId = avatarId;
 
         var updateResult = await _userManager.UpdateAsync(user);
-
-        if (!updateResult.Succeeded)
-        {
-            var errorMessage = string.Join("; ", updateResult.Errors.Select(e => e.Description));
-            return Result.Fail(new Error(ErrorType.Validation, errorMessage));
-        }
-
-        return Result.Ok();
+        return updateResult.ToResult();
     }
 }

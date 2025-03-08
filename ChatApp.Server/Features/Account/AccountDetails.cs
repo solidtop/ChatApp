@@ -8,6 +8,7 @@ public record AccountDetails(
     string? Username,
     string? Email,
     IList<string> Roles,
+    string? DisplayColor,
     Avatar? Avatar
     )
 {
@@ -18,6 +19,7 @@ public record AccountDetails(
             user.UserName,
             user.Email,
             roles,
+            user.DisplayColor,
             user.Avatar
             );
     }

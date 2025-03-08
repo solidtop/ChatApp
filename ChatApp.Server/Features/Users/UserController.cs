@@ -8,8 +8,8 @@ namespace ChatApp.Server.Features.Users;
 [Authorize]
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-[Route("api/[controller]")]
-public class UsersController(IUserService userService) : ControllerBase
+[Route("api/users")]
+public class UserController(IUserService userService) : ControllerBase
 {
     private readonly IUserService _userService = userService;
 

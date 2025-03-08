@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ChatApp.Server.Features.Auth.Requests;
+using Microsoft.AspNetCore.Identity;
 
 namespace ChatApp.Server.Features.Auth;
 
@@ -13,6 +14,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, SignInManager
         {
             UserName = request.Username,
             Email = request.Email,
+            DisplayColor = "#FF0000",
             AvatarId = 1
         };
 

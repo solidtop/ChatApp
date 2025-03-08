@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ChatApp.Server.Features.Auth.Requests;
+using Microsoft.AspNetCore.Identity;
 
 namespace ChatApp.Server.Features.Auth;
 
