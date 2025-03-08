@@ -4,5 +4,6 @@ public enum ErrorType
 {
     None,
     NotFound,
+    Validation,
 }
 

@@ -1,4 +1,5 @@
 ﻿using ChatApp.Server.Features.Auth;
+using ChatApp.Server.Features.Avatars;
 
 namespace ChatApp.Server.Features.Account;
 
@@ -6,7 +7,8 @@ public record AccountDetails(
     string UserId,
     string? Username,
     string? Email,
-    IList<string> Roles
+    IList<string> Roles,
+    Avatar? Avatar
     )
 {
     public static AccountDetails FromUser(ApplicationUser user, IList<string> roles)
@@ -15,7 +17,8 @@ public record AccountDetails(
             user.Id,
             user.UserName,
             user.Email,
-            roles
+            roles,
+            user.Avatar
             );
     }
 }

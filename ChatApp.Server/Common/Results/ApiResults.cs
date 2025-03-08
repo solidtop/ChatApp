@@ -30,6 +30,7 @@ public static class ApiResults
             errorType switch
             {
                 ErrorType.NotFound => "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+                ErrorType.Validation => "https://tools.ietf.org/html/rfc9110#section-15.5.1",
                 _ => "https://tools.ietf.org/html/rfc9110#section-15.6.1"
             };
 
@@ -37,6 +38,7 @@ public static class ApiResults
             errorType switch
             {
                 ErrorType.NotFound => "Not Found",
+                ErrorType.Validation => "Bad Request",
                 _ => "Internal Server Error"
             };
 
@@ -44,6 +46,7 @@ public static class ApiResults
            errorType switch
            {
                ErrorType.NotFound => StatusCodes.Status404NotFound,
+               ErrorType.Validation => StatusCodes.Status400BadRequest,
                _ => StatusCodes.Status500InternalServerError
            };
     }

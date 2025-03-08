@@ -4,14 +4,16 @@ namespace ChatApp.Server.Features.Users;
 
 public record UserSummary(
     string Id,
-    string? Username
+    string? Username,
+    string? AvatarImageUrl
     )
 {
     public static UserSummary FromUser(ApplicationUser user)
     {
         return new UserSummary(
             user.Id,
-            user.UserName
+            user.UserName,
+            user.Avatar?.ImageUrl
             );
     }
 }

@@ -13,6 +13,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         base.OnModelCreating(builder);
 
+        builder.Entity<ApplicationUser>()
+            .Navigation(user => user.Avatar)
+            .AutoInclude();
+
         // Seed some placeholder avatars
         builder.Entity<Avatar>().HasData(
             new Avatar() { Id = 1, Name = "Ninja cat", ImageUrl = "https://robohash.org/9fd81b488a86a7b3f61eebbca767b644?set=set4&bgset=&size=200x200" },
