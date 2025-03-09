@@ -1,10 +1,11 @@
 ﻿using ChatApp.Server.Common.Results;
+using ChatApp.Server.Features.Account.Requests;
 
 namespace ChatApp.Server.Features.Account;
 
 public interface IAccountService
 {
     Task<Result<AccountDetails>> GetAccountDetailsAsync(string userId);
-    Task<Result> UpdateDisplayColorAsync(string userId, string color);
-    Task<Result> UpdateAvatarAsync(string userId, int avatarId);
+    Task<Result> UpdateDisplayColorAsync(string userId, UpdateDisplayColorRequest request);
+    Task<Result> UpdateAvatarAsync(string userId, UpdateAvatarRequest request);
 }

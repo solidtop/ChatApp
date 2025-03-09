@@ -45,7 +45,7 @@ public class AccountController(IAccountService accountService) : ControllerBase
             return Unauthorized();
         }
 
-        var result = await _accountService.UpdateDisplayColorAsync(userId, request.Color);
+        var result = await _accountService.UpdateDisplayColorAsync(userId, request);
         return result.MatchVoid(Ok, ApiResults.Problem);
     }
 
@@ -65,7 +65,7 @@ public class AccountController(IAccountService accountService) : ControllerBase
             return Unauthorized();
         }
 
-        var result = await _accountService.UpdateAvatarAsync(userId, request.AvatarId);
+        var result = await _accountService.UpdateAvatarAsync(userId, request);
         return result.MatchVoid(Ok, ApiResults.Problem);
     }
 }
