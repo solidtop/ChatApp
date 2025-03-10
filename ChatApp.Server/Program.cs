@@ -16,7 +16,7 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    var connectionString = builder.Configuration.GetConnectionString("Database");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
@@ -40,6 +40,8 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors("DevCorsPolicy");
+    app.ApplyMigrations();
     app.MapOpenApi();
 
     app.UseSwaggerUI(options =>
@@ -49,8 +51,6 @@ if (app.Environment.IsDevelopment())
 
     await app.Services.SeedRolesAsync();
     await app.Services.SeedAdminAsync();
-
-    app.UseCors("DevCorsPolicy");
 }
 
 app.UseAuthentication();
