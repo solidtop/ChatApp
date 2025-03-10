@@ -1,0 +1,23 @@
+services:
+  chatapp.server:
+    image: ${DOCKER_REGISTRY-}chatappserver
+    container_name: ChatApp.Server
+    build:
+      context: .
+      dockerfile: ChatApp.Server/Dockerfile
+    depends_on: 
+      - chatapp.database
+
+  chatapp.database:
+    image: mysql:latest
+    container_name: ChatApp.Database
+    environment:
+      - MYSQL_DATABASE=chatapp
+      - MYSQL_ROOT_USER=root 
+      - MYSQL_ROOT_PASSWORD=password 
+      - MYSQL_PASSWORD=password 
+    ports:
+      - 3306:3306
+  
+
+  
