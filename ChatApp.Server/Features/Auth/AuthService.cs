@@ -32,7 +32,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, SignInManager
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
 
-        if (user is null || !await _userManager.IsEmailConfirmedAsync(user))
+        if (user is null)
         {
             return SignInResult.Failed;
         }
