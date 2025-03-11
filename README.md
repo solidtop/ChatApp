@@ -3,6 +3,16 @@ A chat application built with ASP.NET Core for the backend, Angular for the fron
 
 ## Table of Contents
 
+- [Features]
+- [Tech Stack]
+- [Prerequisites]
+- [Setup and Installation]
+	- [Configuration] 
+	- [Database Setup using Docker]
+- [Running the Application]
+- [Development Workflow]
+- [API Endpoints]
+
 ## Features
 - **Authentication:**\
 	Register, login and logout endpoints using ASP.NET Core Identity
@@ -20,7 +30,7 @@ A chat application built with ASP.NET Core for the backend, Angular for the fron
 - **Frontend:** Angular
 - **Database:** MySQL
 - **Containerization:** Docker, Docker Compose
-- **Logging:** ASP.NET Core Loggin
+- **Logging:** ASP.NET Core Logging
 - **Dependency Injection & Modular Architecture:** SOLID principles with feature-based organization
 
 ## Prerequisites
@@ -50,51 +60,21 @@ In your ==appsettings.Development.json==, set your connection string. Note that 
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=ChatApp.Database;Port=3306;Database=ChatApp;User=root;Password=password;"
+    "Database": "Server=chatapp.database; Port=3306; Database=chatapp; User=root; Password=password;"
   }
 }
 ```
 
-## Database Setup Using Docker
-1. **Create a ==docker-compose.yml== file in the project root (or use the provided one):**
-```yaml
-version: '3.8'
-services:
-  mysql:
-    image: mysql:8.0
-    container_name: ChatApp.Database
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: ChatApp
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-  chatappapi:
-    build:
-      context: ./ChatApp.Api
-      dockerfile: Dockerfile
-    container_name: ChatApp.Api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=ChatApp.Database;Port=3306;Database=ChatApp;User=root;Password=password;
-    depends_on:
-      - mysql
-    ports:
-      - "5000:80"
-volumes:
-  mysql_data:
-```
-2. **Run the containers:
+### Database Setup Using Docker 
+If using Visual Studio, you can run the 'Docker Compose' command to automatically build the required containers.
+
+**Run the containers using CLI:**
 ```bash
 docker-compose up --build
 ```
-Your API will be available at ==https://localhost:7288== and will connect to the MySQL container.
+Your Server will be available at ==https://localhost:5001== and will connect to the MySQL container.
 
-3. **Apply EF Core migrations:**\
+**Apply EF Core migrations:**\
 Navigate to the Server project folder and run:
 ```bash
 dotnet ef database update
@@ -119,7 +99,26 @@ The project is organized by feature. For example:
 - ChatApp.Server/Features/Users for public user data.
 
 - **Extension Methods:**\
-Common configurations (like CORS, logging, and authentication) are encapsulated in extension methods located in the ==/Extensions== folder.
+Common configurations (like CORS, and authentication) are encapsulated in extension methods located in the ==/Extensions== folder.
 
 - **Logging & Error Handling:**\
 The API uses ASP.NET Core’s logging system along with structured logging and ProblemDetails for error responses.
+
+## API Endpoints
+- **Authentication:**
+	- ==POST== /api/auth/register
+	- ==POST== /api/auth/login
+	- ==POST== /api/auth/logout
+
+- **Account:**
+	- ==GET== /api/account/details 
+	- ==PUT== /api/account/display-color 
+	- ==PUT== /api/account/avatar 
+
+- **Users:**
+	- ==GET== /api/users
+	- ==GET== /api/users/{id}
+
+- **Avatars:**
+	- ==GET== /api/avatars
+	- ==GET== /api/avatars/{id}
