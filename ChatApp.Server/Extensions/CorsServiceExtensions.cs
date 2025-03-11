@@ -6,9 +6,10 @@ public static class CorsServiceExtensions
     {
         return services.AddCors(o => o.AddPolicy("DevCorsPolicy", policy =>
         {
-            policy.AllowAnyOrigin()
+            policy.WithOrigins("https://localhost:63332")
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowCredentials();
         }));
     }
 }
