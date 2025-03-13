@@ -31,7 +31,7 @@ export class LoginFormComponent {
       .pipe(take(1))
       .subscribe({
         error: () => this.loginFailed = true,
-        complete: () =>  this.loginCompleted.emit(),
+        complete: () => this.loginCompleted.emit(),
       });
   }
 }

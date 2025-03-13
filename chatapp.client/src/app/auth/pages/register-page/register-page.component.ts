@@ -9,7 +9,7 @@ import { RegisterFormComponent } from '../../components/register-form/register-f
 })
 export class RegisterPageComponent {
 
-  onRegisterCompleted() {
+  onRegistrationCompleted() {
     console.log('Registration completed!');
   }
 }

@@ -16,7 +16,7 @@ export class RegisterFormComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   errors: IdentityError[] = [];
-  registerCompleted = output<void>();
+  registrationCompleted = output<void>();
 
   readonly form: FormGroup = this.formBuilder.group({
     username: ['', Validators.required],
@@ -34,7 +34,7 @@ export class RegisterFormComponent {
       .pipe(take(1))
       .subscribe({
         error: (response: HttpErrorResponse) => this.errors = response.error,
-        complete: () => this.registerCompleted.emit(),
+        complete: () => this.registrationCompleted.emit(),
       });
   }
 }
