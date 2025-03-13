@@ -21,7 +21,7 @@ public static class AuthServiceExtensions
 
         services.ConfigureApplicationCookie(options =>
         {
-            options.Cookie.Name = "token";
+            options.Cookie.Name = "ChatAppAuth";
             options.Cookie.HttpOnly = true;
             options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             options.Cookie.SameSite = SameSiteMode.None;
