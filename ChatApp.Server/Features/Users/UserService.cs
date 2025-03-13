@@ -9,12 +9,12 @@ public class UserService(UserManager<ApplicationUser> userManager) : IUserServic
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
 
-    public Task<List<UserSummary>> GetUserSummaries()
+    public Task<List<UserSummary>> GetUserSummariesAsync()
     {
         return _userManager.Users.Select(user => UserSummary.FromUser(user)).ToListAsync();
     }
 
-    public async Task<Result<UserProfile>> GetUserProfile(string userId)
+    public async Task<Result<UserProfile>> GetUserProfileAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
 

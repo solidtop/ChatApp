@@ -4,6 +4,6 @@ namespace ChatApp.Server.Features.Users;
 
 public interface IUserService
 {
-    Task<List<UserSummary>> GetUserSummaries();
-    Task<Result<UserProfile>> GetUserProfile(string userId);
+    Task<List<UserSummary>> GetUserSummariesAsync();
+    Task<Result<UserProfile>> GetUserProfileAsync(string userId);
 }

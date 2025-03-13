@@ -16,7 +16,7 @@ public class UserController(IUserService userService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<UserSummary>>> GetUsers()
     {
-        var summaries = await _userService.GetUserSummaries();
+        var summaries = await _userService.GetUserSummariesAsync();
         return Ok(summaries);
     }
 
@@ -24,7 +24,7 @@ public class UserController(IUserService userService) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserProfile>> GetUser(string id)
     {
-        var result = await _userService.GetUserProfile(id);
+        var result = await _userService.GetUserProfileAsync(id);
         return result.Match(Ok, ApiResults.Problem);
     }
 }
