@@ -5,6 +5,7 @@ namespace ChatApp.Server.Features.Account;
 
 public interface IAccountService
 {
+    Task<Result<AccountProfile>> GetAccountProfileAsync(string userId);
     Task<Result> UpdateDisplayColorAsync(string userId, UpdateDisplayColorRequest request);
     Task<Result> UpdateAvatarAsync(string userId, UpdateAvatarRequest request);
 }
