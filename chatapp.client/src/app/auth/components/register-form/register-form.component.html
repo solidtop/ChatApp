@@ -1,0 +1,10 @@
+<form id="register-form" [formGroup]="form" class="register-form" (submit)="handleRegister($event)">
+    <input id="username" placeholder="username" formControlName="username" />
+    <input id="email" placeholder="email" formControlName="email" />
+    <input id="password" type="password" placeholder="password" formControlName="password" />
+    <button type="submit" [disabled]="!form.valid">Register</button>
+
+    @for (error of errors; track error) {
+        <strong class="error-message">{{error.description}}</strong>
+    }
+</form>

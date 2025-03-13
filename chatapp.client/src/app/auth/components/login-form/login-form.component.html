@@ -1,0 +1,9 @@
+<form id="login-form" [formGroup]="form" class="register-form" (submit)="handleLogin($event)">
+    <input id="email" placeholder="email" formControlName="email" />
+    <input id="password" type="password" placeholder="password" formControlName="password" />
+    <button type="submit" [disabled]="!form.valid">Login</button>
+
+    @if (loginFailed) {
+        <strong>Email or password is incorrect</strong>
+    }
+</form>

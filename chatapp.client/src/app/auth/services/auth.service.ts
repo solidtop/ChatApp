@@ -9,20 +9,14 @@ import { RegisterResponse } from '../interfaces/register-response.interface';
   providedIn: 'root'
 })
 export class AuthService extends ApiService {
-  private readonly authUrl = `${this.apiUrl}/api/auth`;
+  private readonly authUrl = `${this.apiUrl}/auth`;
 
   public register(request: RegisterRequest): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(`${this.authUrl}/register`, request, {
-      headers: this.headers,
-      withCredentials: true,
-    });
+    return this.http.post<RegisterResponse>(`${this.authUrl}/register`, request);
   }
 
   public login(request: LoginRequest): Observable<void> {
-    return this.http.post<void>(`${this.authUrl}/login`, request, {
-      headers: this.headers,
-      withCredentials: true,
-    });
+    return this.http.post<void>(`${this.authUrl}/login`, request);
   }
 
   public logout(): Observable<void> {

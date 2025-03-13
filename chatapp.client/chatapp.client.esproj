@@ -6,6 +6,8 @@
     <ShouldRunBuildScript>false</ShouldRunBuildScript>
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\chatapp.client\browser\</BuildOutputFolder>
+    <BuildCommand>
+    </BuildCommand>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\shared\services\" />
