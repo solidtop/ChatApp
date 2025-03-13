@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using ChatApp.Server.Common.Results;
 using ChatApp.Server.Features.Account.Requests;
+using ChatApp.Server.Features.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +12,13 @@ namespace ChatApp.Server.Features.Account;
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [Route("/api/account")]
-public class AccountController(IAccountService accountService) : ControllerBase
+public class AccountController(IAccountService accountService, IUserService userService) : ControllerBase
 {
     private readonly IAccountService _accountService = accountService;
+    private readonly IUserService _userService = userService;
 
-    [HttpGet("details")]
-    public async Task<ActionResult<AccountDetails>> GetAccountDetails()
+    [HttpGet("user")]
+    public async Task<ActionResult<UserProfile>> GetUser()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -25,7 +27,7 @@ public class AccountController(IAccountService accountService) : ControllerBase
             return Unauthorized();
         }
 
-        var result = await _accountService.GetAccountDetailsAsync(userId);
+        var result = await _userService.GetUserProfile(userId);
         return result.Match(Ok, ApiResults.Problem);
     }
 

@@ -14,7 +14,7 @@ public class UserService(UserManager<ApplicationUser> userManager) : IUserServic
         return _userManager.Users.Select(user => UserSummary.FromUser(user)).ToListAsync();
     }
 
-    public async Task<Result<UserDetails>> GetUserDetails(string userId)
+    public async Task<Result<UserProfile>> GetUserProfile(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
 
@@ -25,6 +25,6 @@ public class UserService(UserManager<ApplicationUser> userManager) : IUserServic
 
         var roles = await _userManager.GetRolesAsync(user);
 
-        return UserDetails.FromUser(user, roles);
+        return UserProfile.FromUser(user, roles);
     }
 }
