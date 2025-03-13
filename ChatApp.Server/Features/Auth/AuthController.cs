@@ -27,7 +27,7 @@ public class AuthController(IAuthService authService) : ControllerBase
             return BadRequest(result.Errors);
         }
 
-        return Ok("Registration successful");
+        return Ok();
     }
 
     [HttpPost("login")]
@@ -47,7 +47,7 @@ public class AuthController(IAuthService authService) : ControllerBase
             return Unauthorized("Invalid credentials");
         }
 
-        return Ok("Login successful");
+        return Ok();
     }
 
     [HttpPost("logout")]
@@ -56,6 +56,6 @@ public class AuthController(IAuthService authService) : ControllerBase
     public async Task<ActionResult> Logout()
     {
         await _authService.LogoutAsync();
-        return Ok("Logout successful");
+        return Ok();
     }
 }
