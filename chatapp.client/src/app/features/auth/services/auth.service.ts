@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginRequest } from '../../features/auth/interfaces/login-request.interface';
-import { RegisterRequest } from '../../features/auth/interfaces/register-request.interface';
-import { RegisterResponse } from '../../features/auth/interfaces/register-response.interface';
-import { ApiService } from '../../shared/services/api.service';
+import { ApiService } from '../../../shared/services/api.service';
+import { LoginRequest } from '../interfaces/login-request.interface';
+import { RegisterRequest } from '../interfaces/register-request.interface';
+import { RegisterResponse } from '../interfaces/register-response.interface';
+
 
 @Injectable({
   providedIn: 'root'
