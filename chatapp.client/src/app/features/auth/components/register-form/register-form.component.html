@@ -1,4 +1,4 @@
-<form id="register-form" [formGroup]="form" class="register-form" (submit)="handleRegister($event)">
+<form id="register-form" [formGroup]="form" class="register-form" (submit)="onSubmit($event)">
     <input id="username" placeholder="username" formControlName="username" />
     <input id="email" placeholder="email" formControlName="email" />
     <input id="password" type="password" placeholder="password" formControlName="password" />

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AccountStateService } from './features/account/services/account-state.service';
 
 @Component({
   imports: [RouterOutlet],
@@ -7,6 +8,10 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  private readonly accountStateService = inject(AccountStateService);
 
+  ngOnInit(): void {
+    this.accountStateService.loadProfile();
+  }
 }

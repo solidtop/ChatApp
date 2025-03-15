@@ -21,7 +21,7 @@ export class LoginFormComponent {
     password: ['', Validators.required],
   });
 
-  handleLogin(ev: Event) {
+  onSubmit(ev: Event) {
     ev.preventDefault();
     this.loginFailed = false;
 

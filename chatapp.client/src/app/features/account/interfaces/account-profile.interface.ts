@@ -1,6 +1,6 @@
 import { Avatar } from "./avatar.interface";
 
-export interface AccountDetails {
+export interface AccountProfile {
     userId: string;
     username: string;
     email: string;

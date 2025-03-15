@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 
 @Component({
@@ -8,8 +9,10 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
   styleUrl: './login-page.component.css'
 })
 export class LoginPageComponent {
+  private readonly router = inject(Router);
 
   onLoginCompleted() {
     console.log('Login completed!');
+    this.router.navigateByUrl('/');
   }
 }

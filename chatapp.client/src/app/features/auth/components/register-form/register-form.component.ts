@@ -24,7 +24,7 @@ export class RegisterFormComponent {
     password: ['', Validators.required],
   });
 
-  handleRegister(ev: Event) {
+  onSubmit(ev: Event) {
     ev.preventDefault();
     this.errors = [];
 
