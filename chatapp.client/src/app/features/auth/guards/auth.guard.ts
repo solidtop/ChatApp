@@ -1,14 +1,13 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { first, map } from 'rxjs';
-import { AccountStateService } from '../../account/services/account-state.service';
+import { map } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 export const authGuard: CanActivateFn = () => {
-  const accountStateService = inject(AccountStateService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  return accountStateService.profile$.pipe(
-    first((profile) => profile !== undefined),
-    map((profile) => profile ? true : router.parseUrl('/login'))
-  ); 
+  return authService.isAuthenticated().pipe(
+    map(authenticated => authenticated ? true : router.parseUrl('/login'))
+  );
 };
