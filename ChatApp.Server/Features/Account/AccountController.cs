@@ -15,8 +15,8 @@ public class AccountController(IAccountService accountService) : ControllerBase
 {
     private readonly IAccountService _accountService = accountService;
 
-    [HttpGet("profile")]
-    public async Task<ActionResult<AccountProfile>> GetAccountProfile()
+    [HttpGet("details")]
+    public async Task<ActionResult<AccountDetails>> GetAccountDetails()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -25,7 +25,7 @@ public class AccountController(IAccountService accountService) : ControllerBase
             return Unauthorized();
         }
 
-        var result = await _accountService.GetAccountProfileAsync(userId);
+        var result = await _accountService.GetAccountDetailsAsync(userId);
         return result.Match(Ok, ApiResults.Problem);
     }
 

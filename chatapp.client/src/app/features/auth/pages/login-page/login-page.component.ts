@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountStateService } from '../../../account/services/account-state.service';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 
 @Component({
@@ -9,10 +10,12 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
   styleUrl: './login-page.component.css'
 })
 export class LoginPageComponent {
+  private readonly accountStateService = inject(AccountStateService);
   private readonly router = inject(Router);
-
+  
   onLoginCompleted() {
     console.log('Login completed!');
+    this.accountStateService.loadDetails();
     this.router.navigateByUrl('/');
   }
 }

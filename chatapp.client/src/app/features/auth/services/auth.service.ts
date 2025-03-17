@@ -33,8 +33,8 @@ export class AuthService extends ApiService {
   }
 
   public isAuthenticated(): Observable<boolean> {
-      return this.accountStateService.profile$.pipe(
-        first((profile) => profile !== undefined),
-        map((profile) => profile ? true : false)); 
+      return this.accountStateService.details$.pipe(
+        first((account) => account !== undefined),
+        map((account) => account ? true : false)); 
   }
 }

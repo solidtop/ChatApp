@@ -1,0 +1,38 @@
+<div class="account-menu">
+    <button class="account-menu__toggle" (click)="toggle()"></button>
+
+    @if (accountDetails$ | async; as account) {         
+        @if (account.avatar) {
+            <img class="account-menu__avatar" [src]="account.avatar.imageUrl" alt="User Avatar">
+        }
+
+        <span class="account-menu__label">{{ account.username }}</span>
+
+        @if (isOpen) {
+            <div class="account-menu__dropdown">
+                <ul class="account-menu__options">
+                    <li class="account-menu__option">
+                        <button (click)="logout()">Log Out</button>
+                    </li>
+                </ul>
+            </div>
+        }
+    }
+    @else {
+        <img class="account-menu__avatar" src="https://www.gravatar.com/avatar/?d=mp" alt="User Avatar">
+        <span class="account-menu__label">Account</span>
+
+        @if (isOpen) {
+            <div class="account-menu__dropdown">
+                <ul class="account-menu__options">
+                    <li class="account-menu__option">
+                        <a routerLink="/login">Log In</a>
+                    </li>
+                    <li class="account-menu__option">
+                        <a routerLink="/register">Create Account</a>
+                    </li>
+                </ul>
+            </div>
+        }
+    }
+</div>

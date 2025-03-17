@@ -12,6 +12,6 @@ export class AppComponent implements OnInit {
   private readonly accountStateService = inject(AccountStateService);
 
   ngOnInit(): void {
-    this.accountStateService.loadProfile();
+    this.accountStateService.loadDetails();
   }
 }

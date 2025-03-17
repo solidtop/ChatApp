@@ -1,7 +1,0 @@
-@if (profile$ | async; as profile) { 
-    @if (profile.avatar) {
-        <img [src]="profile.avatar.imageUrl">
-    }
-    
-    <p>Username: {{ profile.username }}</p>
-}

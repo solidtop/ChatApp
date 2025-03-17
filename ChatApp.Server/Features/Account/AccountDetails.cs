@@ -3,7 +3,7 @@ using ChatApp.Server.Features.Avatars;
 
 namespace ChatApp.Server.Features.Account;
 
-public record AccountProfile(
+public record AccountDetails(
     string UserId,
     string? Username,
     string? Email,
@@ -12,9 +12,9 @@ public record AccountProfile(
     Avatar? Avatar
     )
 {
-    public static AccountProfile FromUser(ApplicationUser user, IList<string> roles)
+    public static AccountDetails FromUser(ApplicationUser user, IList<string> roles)
     {
-        return new AccountProfile(
+        return new AccountDetails(
             user.Id,
             user.UserName,
             user.Email,

@@ -89,7 +89,8 @@ public static class AuthServiceExtensions
                 var user = new ApplicationUser
                 {
                     UserName = username,
-                    Email = email
+                    Email = email,
+                    AvatarId = 1,
                 };
 
                 await userManager.CreateAsync(user, password);

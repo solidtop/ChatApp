@@ -1,30 +1,30 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AccountProfile } from '../interfaces/account-profile.interface';
+import { AccountDetails } from '../interfaces/account-details.interface';
 import { AccountService } from './account.service';
 
-export type AccountProfileState = AccountProfile | null | undefined;
+export type AccountDetailsState = AccountDetails | null | undefined;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountStateService {
   private readonly accountService = inject(AccountService);
-  private readonly profileSubject = new BehaviorSubject<AccountProfileState>(undefined);
-  public readonly profile$: Observable<AccountProfileState> = this.profileSubject.asObservable();
+  private readonly detailsSubject = new BehaviorSubject<AccountDetailsState>(undefined);
+  public readonly details$: Observable<AccountDetailsState> = this.detailsSubject.asObservable();
 
-  loadProfile(): void {
-    this.accountService.getAccountProfile().subscribe({ 
-      next: (profile: AccountProfile) => this.profileSubject.next(profile),
-      error: () => this.profileSubject.next(null),
+  loadDetails(): void {
+    this.accountService.getAccountDetails().subscribe({ 
+      next: (details: AccountDetails) => this.detailsSubject.next(details),
+      error: () => this.detailsSubject.next(null),
     });
   }
 
-  public getProfile(): AccountProfileState {
-    return this.profileSubject.getValue();
+  public getDetails(): AccountDetailsState {
+    return this.detailsSubject.getValue();
   }
 
-  public clearProfile(): void {
-    this.profileSubject.next(null);
+  public clear(): void {
+    this.detailsSubject.next(null);
   }
 }

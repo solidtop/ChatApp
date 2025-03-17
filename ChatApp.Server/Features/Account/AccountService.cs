@@ -16,7 +16,7 @@ public class AccountService(UserManager<ApplicationUser> userManager, Applicatio
     private readonly ApplicationDbContext _context = context;
     private readonly ColorValidator _colorValidator = colorValidator;
 
-    public async Task<Result<AccountProfile>> GetAccountProfileAsync(string userId)
+    public async Task<Result<AccountDetails>> GetAccountDetailsAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
 
@@ -27,7 +27,7 @@ public class AccountService(UserManager<ApplicationUser> userManager, Applicatio
 
         var roles = await _userManager.GetRolesAsync(user);
 
-        return AccountProfile.FromUser(user, roles);
+        return AccountDetails.FromUser(user, roles);
     }
 
     public async Task<Result> UpdateDisplayColorAsync(string userId, UpdateDisplayColorRequest request)
