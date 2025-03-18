@@ -10,4 +10,10 @@ public static class ValidationResultExtensions
         var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
         return Result.Fail(new ValidationError("One or more errors occurred", errors));
     }
+
+    public static Result<T> ToResult<T>(this ValidationResult validationResult)
+    {
+        var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+        return Result.Fail<T>(new ValidationError("One or more errors occurred", errors));
+    }
 }

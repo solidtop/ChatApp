@@ -8,8 +8,10 @@ public class ChatMessage
     public required string Text { get; set; }
     public string? TextColor { get; set; }
     public DateTime Timestamp { get; set; }
-    public int ChannelId { get; set; }
-    public required ChatChannel Channel { get; set; }
-    public required string UserId { get; set; }
-    public required ApplicationUser User { get; set; }
+
+    public int? ChannelId { get; set; }
+    public ChatChannel? Channel { get; set; }
+
+    public string? UserId { get; set; }
+    public ApplicationUser? User { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using ChatApp.Server.Features.Auth;
+﻿using ChatApp.Server.Extensions;
+using ChatApp.Server.Features.Auth;
 using ChatApp.Server.Features.Avatars;
 using ChatApp.Server.Features.Chat;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,6 +11,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Avatar> Avatars { get; set; }
     public DbSet<ChatChannel> ChatChannels { get; set; }
+    public DbSet<ChatMessage> ChatMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -18,6 +20,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         builder.Entity<ApplicationUser>()
             .Navigation(user => user.Avatar)
             .AutoInclude();
+
+        builder.Entity<ChatMessage>()
+             .ConfigureChatMessageRelationships();
 
         // Seed some placeholder avatars
         builder.Entity<Avatar>().HasData(

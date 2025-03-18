@@ -11,7 +11,7 @@ public record ChatMessageResponse(int Id, string Text, string? TextColor, DateTi
             message.Text,
             message.TextColor,
             message.Timestamp,
-            UserSummary.FromUser(message.User)
+            UserSummary.FromUser(message.User!)
         );
     }
 }

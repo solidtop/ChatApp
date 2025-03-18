@@ -1,4 +1,5 @@
-﻿using ChatApp.Server.Common.Results;
+﻿using System.Security.Claims;
+using ChatApp.Server.Common.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +7,6 @@ namespace ChatApp.Server.Features.Chat;
 
 [ApiController]
 [Authorize]
-[ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [Route("/api/chat")]
 public class ChatController(IChatService chatService) : ControllerBase
@@ -14,6 +14,7 @@ public class ChatController(IChatService chatService) : ControllerBase
     private readonly IChatService _chatService = chatService;
 
     [HttpGet("channels")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<List<ChatChannel>>> GetChannels()
     {
         var channels = await _chatService.GetChannelsAsync();
@@ -22,9 +23,43 @@ public class ChatController(IChatService chatService) : ControllerBase
 
     [HttpGet("channels/{id}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<ChatChannel>> GetChannel(int id)
     {
         var result = await _chatService.GetChannelAsync(id);
         return result.Match(Ok, ApiResults.Problem);
+    }
+
+    [HttpGet("messages/{channelId}")]
+    [Authorize(Roles = "Admin")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<ChatChannel>> GetMessages(int channelId)
+    {
+        var messages = await _chatService.GetChatHistoryAsync(channelId);
+        return Ok(messages);
+    }
+
+    [HttpPost("messages")]
+    [Authorize(Roles = "Admin")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<ActionResult<ChatMessageResponse>> CreateMessage(ChatMessageRequest request)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId is null)
+        {
+            return Unauthorized();
+        }
+
+        var result = await _chatService.CreateMessageAsync(userId, request);
+
+        if (result.IsFailure)
+        {
+            return ApiResults.Problem(result);
+        }
+
+        var message = result.Value;
+
+        return CreatedAtAction(nameof(CreateMessage), new { id = message?.Id }, message);
     }
 }
