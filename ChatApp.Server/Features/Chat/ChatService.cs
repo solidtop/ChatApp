@@ -32,12 +32,13 @@ public class ChatService(ApplicationDbContext context, UserManager<ApplicationUs
         return Result.Ok(channel);
     }
 
-    public async Task<List<ChatMessageResponse>> GetChatHistoryAsync(int channelId)
+    public async Task<List<ChatMessageResponse>> GetLatestMessagesAsync(int channelId, int count)
     {
         var latestMessages = await _context.ChatMessages
             .Where(message => message.ChannelId == channelId)
             .OrderByDescending(message => message.Timestamp)
-            .Take(10).ToListAsync();
+            .Take(count)
+            .Reverse().ToListAsync();
 
         return [.. latestMessages.Select(ChatMessageResponse.FromChatMessage)];
     }

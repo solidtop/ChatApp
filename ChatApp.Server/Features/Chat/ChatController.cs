@@ -30,12 +30,11 @@ public class ChatController(IChatService chatService) : ControllerBase
         return result.Match(Ok, ApiResults.Problem);
     }
 
-    [HttpGet("messages/{channelId}")]
-    [Authorize(Roles = "Admin")]
+    [HttpGet("channels/{id}/messages")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<ChatChannel>> GetMessages(int channelId)
+    public async Task<ActionResult<ChatChannel>> GetChannelMessages(int id, [FromQuery] int count = 10)
     {
-        var messages = await _chatService.GetChatHistoryAsync(channelId);
+        var messages = await _chatService.GetLatestMessagesAsync(id, count);
         return Ok(messages);
     }
 
