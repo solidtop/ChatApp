@@ -28,6 +28,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddOpenApiWithConfig();
 
+builder.Services.AddSignalRWithConfig();
+
 builder.Services.AddExceptionHandler<ApiExceptionHandler>();
 builder.Services.AddProblemDetails();
 
@@ -61,6 +63,7 @@ app.UseCookiePolicy();
 app.UseHttpsRedirection();
 
 app.MapControllers();
+app.MapHubs();
 
 app.Run();
 

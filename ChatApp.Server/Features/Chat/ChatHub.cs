@@ -1,40 +1,57 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChatApp.Server.Features.Chat;
 
-public class ChatHub(ILogger<ChatHub> logger) : Hub
+[Authorize]
+public class ChatHub(IChatService chatService, ILogger<ChatHub> logger) : Hub
 {
+    private readonly IChatService _chatService = chatService;
     private readonly ILogger<ChatHub> _logger = logger;
 
     public async Task JoinChannel(int channelId)
     {
+        var channel = await GetChannelOrThrow(channelId);
 
+        await Groups.AddToGroupAsync(Context.ConnectionId, channel.Name);
+
+        _logger.LogInformation("User joined {Channel} channel", channel.Name);
     }
 
     public async Task LeaveChannel(int channelId)
     {
+        var channel = await GetChannelOrThrow(channelId);
 
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, channel.Name);
+
+        _logger.LogInformation("User left {Channel} channel", channel.Name);
     }
 
     public async Task SendMessage(ChatMessageRequest request)
     {
-        var userId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new HubException("User not found");
 
-        if (userId is null)
-            return;
+        var channel = await GetChannelOrThrow(request.ChannelId);
+        var result = await _chatService.CreateMessageAsync(userId, request);
 
+        if (result.IsFailure)
+        {
+            throw new HubException(result.Error.Message);
+        }
 
+        await Clients.Group(channel.Name).SendAsync("ReceiveMessage", result.Value);
     }
 
-
-    public override Task OnConnectedAsync()
+    private async Task<ChatChannel> GetChannelOrThrow(int channelId)
     {
-        return base.OnConnectedAsync();
-    }
+        var result = await _chatService.GetChannelAsync(channelId);
 
-    public override Task OnDisconnectedAsync(Exception? exception)
-    {
-        return base.OnDisconnectedAsync(exception);
+        if (result.IsFailure || result.Value is null)
+        {
+            throw new HubException($"Channel with id {channelId} not found.");
+        }
+
+        return result.Value;
     }
 }
