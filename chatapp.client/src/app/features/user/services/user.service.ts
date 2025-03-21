@@ -8,7 +8,7 @@ import { UserSummary } from '../interfaces/user-summary.interface';
   providedIn: 'root'
 })
 export class UserService extends ApiService {
-  private readonly userUrl = `${this.apiUrl}/users`;
+  private readonly userUrl = `${this.apiUrl}/api/users`;
 
   getUsers(): Observable<UserSummary[]> {
     return this.http.get<UserSummary[]>(this.userUrl, {

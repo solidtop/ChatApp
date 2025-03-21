@@ -7,7 +7,7 @@ import { AccountDetails } from '../interfaces/account-details.interface';
   providedIn: 'root'
 })
 export class AccountService extends ApiService {
-  private readonly accountUrl = `${this.apiUrl}/account`;
+  private readonly accountUrl = `${this.apiUrl}/api/account`;
 
   getAccountDetails(): Observable<AccountDetails> {
     return this.http.get<AccountDetails>(`${this.accountUrl}/details`, {

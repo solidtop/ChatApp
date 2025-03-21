@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { MainHeaderComponent } from '../../../shared/components/main-header/main-header.component';
+import { ChatComponent } from '../../chat/components/chat/chat.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [MainHeaderComponent],
+  imports: [MainHeaderComponent, ChatComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })

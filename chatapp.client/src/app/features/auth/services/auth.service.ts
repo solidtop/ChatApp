@@ -12,7 +12,7 @@ import { RegisterResponse } from '../interfaces/register-response.interface';
 })
 export class AuthService extends ApiService {
   private readonly accountStateService = inject(AccountStateService);
-  private readonly authUrl = `${this.apiUrl}/auth`;
+  private readonly authUrl = `${this.apiUrl}/api/auth`;
 
   public register(request: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(`${this.authUrl}/register`, request, {
