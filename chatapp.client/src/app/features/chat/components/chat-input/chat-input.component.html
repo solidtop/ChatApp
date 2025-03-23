@@ -1,1 +1,9 @@
-<p>chat-input works!</p>
+<form id="chat-form" class="chat-form" [formGroup]="form" (submit)="onSubmit($event)">
+    <input 
+        id="chat-input" 
+        type="text"
+        [placeholder]="'Chat as ' + (accountStateService.details$ | async)?.username" 
+        formControlName="text" 
+    />
+    <button type="submit" [disabled]="!form.valid">Send</button>
+</form>

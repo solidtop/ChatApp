@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ApiService } from '../../../shared/services/api.service';
 import { ChatMessageRequest } from '../interfaces/chat-message-request.interface';
 import { ChatMessageResponse } from '../interfaces/chat-message-response.interface';
@@ -9,8 +9,9 @@ import { ChatMessageResponse } from '../interfaces/chat-message-response.interfa
   providedIn: 'root'
 })
 export class ChatHubService extends ApiService {
- private readonly connection: HubConnection; 
- public readonly messages$ = new BehaviorSubject<ChatMessageResponse[]>([]);
+  private readonly connection: HubConnection; 
+  private newMessageSubject = new Subject<ChatMessageResponse>();
+  public newMessage$ = this.newMessageSubject.asObservable();
 
   constructor() {
     super();
@@ -49,8 +50,7 @@ export class ChatHubService extends ApiService {
 
   private addMessageListener(): void {
     this.connection.on('ReceiveMessage', (message: ChatMessageResponse) => {
-      const currentMessages = this.messages$.getValue();
-      this.messages$.next([...currentMessages, message]);
+      this.newMessageSubject.next(message);
     });  
   }
 }

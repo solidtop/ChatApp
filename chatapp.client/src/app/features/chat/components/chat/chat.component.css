@@ -1,0 +1,40 @@
+.chat {
+}
+
+.chat__channel-input {
+
+}
+
+.chat__messages {
+}
+
+.chat__message-list {
+    
+}
+
+.chat__message {
+    padding: 5px;
+}
+
+.chat__message-timestamp {
+    display: block;
+}
+
+.chat__message-user {
+    display: inline-block;
+}
+
+.chat__message-avatar {
+    height: 18px;
+}
+
+.chat__message-username {
+
+}
+
+.chat__message-text {
+}
+
+.chat__input {
+
+}

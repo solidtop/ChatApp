@@ -1,12 +1,12 @@
-<ul class="channel__list">
+<ul class="chat-channel__list">
     @for (channel of channels(); track channel.id) {
-        <li class="channel__item">
-            <label class="channel__label" [for]="channel.id">{{ channel.name }}</label>
+        <li class="chat-channel__item">
+            <label class="chat-channel__label" [for]="channel.id">{{ channel.name }}</label>
             <input 
                 [id]="channel.id"
                 type="radio"
                 name="channel"
-                class="channel__input"
+                class="chat-channel__input"
                 [value]="channel.id"
                 (change)="changeChannel(channel)"
                 [checked]="isCurrentChannel(channel)"

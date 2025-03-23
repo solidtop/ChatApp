@@ -9,14 +9,14 @@ import { ChatChannel } from '../../interfaces/chat-channel.interface';
 })
 export class ChannelInputComponent {
   channels = input<ChatChannel[]>();
-  currentChannel = input<ChatChannel>();
-  channelChanged = output<ChatChannel>();
+  currentChannelId = input<number>();
+  channelChanged = output<number>();
 
   changeChannel(channel: ChatChannel): void {
-    this.channelChanged.emit(channel);
+    this.channelChanged.emit(channel.id);
   }
 
   isCurrentChannel(channel: ChatChannel): boolean {
-    return channel.id === this.currentChannel()?.id;
+    return channel.id === this.currentChannelId();
   }
 }

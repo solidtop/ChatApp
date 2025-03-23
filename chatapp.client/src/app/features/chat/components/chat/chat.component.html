@@ -1,7 +1,35 @@
-<div class="chat-container">
-    <app-channel-input 
-        [channels]="channels" 
-        [currentChannel]="currentChannel" 
-        (channelChanged)="changeChannel($event)" 
-    />
+<div class="chat">
+    <div class="chat__channel-input">
+        <app-channel-input 
+            [channels]="(chatState.channels$ | async) || []" 
+            [currentChannelId]="chatState.currentChannelId" 
+            (channelChanged)="changeChannel($event)" 
+        />
+    </div>
+
+    <div class="chat__messages">
+        <ul class="chat__messages-list">
+            @for (message of chatState.messages$ | async; track message.id) {
+                <li class="chat__message">
+                    <div class="chat__message-user">
+                        @if (message.user.avatarImageUrl) {
+                            <img class="chat__message-avatar" [src]="message.user.avatarImageUrl" alt="User Avatar" />
+                        } 
+                        
+                        <span class="chat__message-username" [style.color]="message.user.displayColor">
+                            [{{message.user.username }}]:
+                        </span>
+                    </div>
+
+                    <span class="chat__message-text" [style.color]="message.textColor"> 
+                        {{ message.text }}
+                    </span>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="chat__input">
+        <app-chat-input (messageSubmitted)="sendMessage($event)" />
+    </div>
 </div>
