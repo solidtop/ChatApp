@@ -1,0 +1,24 @@
+.text-field {
+    margin-bottom: 1.5em; 
+}
+
+.text-field__label {
+    display: block; 
+    margin-bottom: 0.5em;
+}
+
+.text-field__input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1em 0.5em;
+    outline: none;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    color: var(--text-primary-color);
+    background-color: var(--background-color);
+}
+
+.text-field__input::placeholder {
+    color: var(--text-secondary-color);
+}
+

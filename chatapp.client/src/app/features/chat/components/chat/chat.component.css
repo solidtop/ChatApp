@@ -1,8 +1,6 @@
 .chat {
-}
-
-.chat__channel-input {
-
+    padding: 1em;
+    height: 100vh;
 }
 
 .chat__messages {
@@ -33,8 +31,4 @@
 }
 
 .chat__message-text {
-}
-
-.chat__input {
-
 }

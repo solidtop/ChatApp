@@ -1,0 +1,31 @@
+<section class="form-section">
+    <div class="form-section__header">
+        <h2>{{ title() }}</h2>
+        
+        @if (subTitle()) {
+            <h3>{{ subTitle() }}</h3>
+        }
+    </div>
+   
+    <form 
+        class="form-section__form"
+        [id]="id()"
+        (submit)="submit"
+        [formGroup]="formGroup()!"  
+    >
+        <ng-content />
+
+        <div class="form-section__errors">
+            <ng-content select="[error]" />
+        </div>
+
+        <div class="form-section__actions">
+            <ng-content select="app-primary-button" />
+            <ng-content select="app-secondary-button" />
+        </div>
+    </form>
+</section>
+
+
+
+  

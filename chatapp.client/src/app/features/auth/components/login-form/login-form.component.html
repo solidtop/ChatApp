@@ -1,9 +1,23 @@
-<form id="login-form" class="register-form" [formGroup]="form" (submit)="onSubmit($event)">
-    <input id="email" placeholder="email" formControlName="email" />
-    <input id="password" type="password" placeholder="password" formControlName="password" />
-    <button type="submit" [disabled]="!form.valid">Login</button>
+<app-form id="login-form" title="Login" subTitle="Login to your account" [formGroup]="form" (submit)="onSubmit($event)">
+    <app-text-field 
+        id="email" 
+        label="Email" 
+        placeholder="email" 
+        formControlName="email" 
+    />
+
+    <app-text-field 
+        id="password" 
+        type="password" 
+        label="Password" 
+        placeholder="password" 
+        formControlName="password"
+    />
 
     @if (loginFailed) {
-        <strong>Email or password is incorrect</strong>
+        <strong error>Email or password is incorrect</strong>
     }
-</form>
+
+    <app-primary-button type="submit" [disabled]="!form.valid">Login</app-primary-button>
+</app-form>
+

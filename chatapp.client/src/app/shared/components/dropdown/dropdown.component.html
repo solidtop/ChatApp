@@ -1,0 +1,13 @@
+<div class="dropdown">
+    <button class="dropdown__toggle" (click)="toggle()"></button>
+    <ng-content select="img" />
+    <!-- <span class="dropdown__label">{{ label() }}</span> -->
+
+    @if (isOpen) {
+        <div class="dropdown__menu">
+            <ul class="dropdown__options">
+              <ng-content select="app-dropdown-option" />
+            </ul>
+        </div>
+    }
+</div>

@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { take } from 'rxjs';
 import { IdentityError } from '../../interfaces/identity-error.interface';
 import { RegisterRequest } from '../../interfaces/register-request.interface';
 import { AuthService } from '../../services/auth.service';
@@ -31,7 +30,6 @@ export class RegisterFormComponent {
     const request = this.form.value as RegisterRequest;
 
     this.authService.register(request)
-      .pipe(take(1))
       .subscribe({
         error: (response: HttpErrorResponse) => this.errors = response.error,
         complete: () => this.registrationCompleted.emit(),

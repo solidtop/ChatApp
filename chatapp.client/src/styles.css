@@ -1,6 +1,35 @@
+:root {
+    --primary-color: #637288;
+    --primary-hover-color: #7e94b6;
+    --primary-active-color: #454f5f;
+    --secondary-color: #14171F; 
+    --secondary-hover-color: #292f41;
+    --secondary-active-color: #000000;
+    --background-color: #0F172B;
+    --surface-color: #1E293C;
+    --error-color: rgb(165, 49, 49);
+    --text-primary-color: #F8FFFF;
+    --text-secondary-color: #708095;
+
+    --border: solid 2px rgba(255, 255, 255, 0.1);
+    --border-radius: 10px;
+
+    --shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+body {
+    color: var(--text-primary-color);
+    background-color: var(--background-color);
+}
+
+h1, h2, h3 {
+    margin: 0.5em 0;
+}
+
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Roboto';
 }
 
 ul {

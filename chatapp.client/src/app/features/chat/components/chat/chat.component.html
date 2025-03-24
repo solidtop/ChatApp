@@ -1,11 +1,9 @@
 <div class="chat">
-    <div class="chat__channel-input">
-        <app-channel-input 
-            [channels]="(chatState.channels$ | async) || []" 
-            [currentChannelId]="chatState.currentChannelId" 
-            (channelChanged)="changeChannel($event)" 
-        />
-    </div>
+    <app-channel-input 
+        [channels]="(chatState.channels$ | async) || []" 
+        [currentChannelId]="chatState.currentChannelId" 
+        (channelChanged)="changeChannel($event)" 
+    />
 
     <div class="chat__messages">
         <ul class="chat__messages-list">
@@ -29,7 +27,5 @@
         </ul>
     </div>
 
-    <div class="chat__input">
-        <app-chat-input (messageSubmitted)="sendMessage($event)" />
-    </div>
+    <app-chat-input (messageSubmitted)="sendMessage($event)" />
 </div>

@@ -1,0 +1,15 @@
+.dropdown__option {
+    display: flex;
+    background-color: #272a31;
+}
+
+.dropdown__option::content {
+    padding: 0.5em;
+    color: white;
+}
+
+.dropdown__option:hover {
+    cursor: pointer;
+    background-color: gray;
+}
+

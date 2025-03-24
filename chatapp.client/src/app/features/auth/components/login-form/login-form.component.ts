@@ -1,18 +1,22 @@
 import { Component, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { take } from 'rxjs';
+import { Subject } from '@microsoft/signalr';
+import { FormComponent } from '../../../../shared/components/form/form.component';
+import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
+import { TextFieldComponent } from '../../../../shared/components/text-field/text-field.component';
 import { LoginRequest } from '../../interfaces/login-request.interface';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormComponent, TextFieldComponent, PrimaryButtonComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
 export class LoginFormComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  destroy$ = new Subject<void>();
   loginFailed = false;
   loginCompleted = output<void>();
 
@@ -28,7 +32,6 @@ export class LoginFormComponent {
     const request = this.form.value as LoginRequest;
 
     this.authService.login(request)
-      .pipe(take(1))
       .subscribe({
         error: () => this.loginFailed = true,
         complete: () => this.loginCompleted.emit(),

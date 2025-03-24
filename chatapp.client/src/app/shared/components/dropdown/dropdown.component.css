@@ -1,0 +1,22 @@
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+
+.dropdown__toggle {
+    position: absolute;
+    inset: 0;
+    background: none;
+    border: none;
+}
+
+.dropdown__menu {
+    position: absolute;
+    top: 100%;
+}
+
+.dropdown__options {
+    background-color: dark;
+}
