@@ -1,13 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormComponent } from '../../../../shared/components/form/form.component';
+import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
+import { TextFieldComponent } from '../../../../shared/components/text-field/text-field.component';
 import { IdentityError } from '../../interfaces/identity-error.interface';
 import { RegisterRequest } from '../../interfaces/register-request.interface';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormComponent, TextFieldComponent, PrimaryButtonComponent],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css'
 })
@@ -20,7 +23,7 @@ export class RegisterFormComponent {
   readonly form: FormGroup = this.formBuilder.group({
     username: ['', Validators.required],
     email: ['', Validators.email],
-    password: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
   onSubmit(ev: Event) {
