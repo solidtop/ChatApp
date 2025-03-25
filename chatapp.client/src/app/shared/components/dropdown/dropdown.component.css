@@ -10,13 +10,18 @@
     inset: 0;
     background: none;
     border: none;
+    z-index: 1;
+}
+
+.dropdown__label {
+    display: none;
 }
 
 .dropdown__menu {
     position: absolute;
     top: 100%;
+    overflow: hidden;
+    border: var(--border);
+    border-radius: var(--border-radius);
 }
 
-.dropdown__options {
-    background-color: dark;
-}

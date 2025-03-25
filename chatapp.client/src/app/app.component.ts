@@ -1,11 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AccountStateService } from './features/account/services/account-state.service';
-import { DropdownOptionComponent } from './shared/components/dropdown-option/dropdown-option.component';
-import { DropdownComponent } from './shared/components/dropdown/dropdown.component';
 
 @Component({
-  imports: [RouterOutlet, DropdownComponent, DropdownOptionComponent],
+  imports: [RouterOutlet],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

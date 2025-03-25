@@ -1,15 +1,22 @@
 .dropdown__option {
     display: flex;
-    background-color: #272a31;
-}
-
-.dropdown__option::content {
-    padding: 0.5em;
-    color: white;
+    align-items: center;
+    width: 50vw;
+    background-color: var(--surface-color);
 }
 
 .dropdown__option:hover {
     cursor: pointer;
-    background-color: gray;
+    background-color: var(--primary-hover-color);
+}
+
+.dropdown__option:active {
+    background-color: var(--primary-active-color);
+}
+
+@media screen and (min-width: 600px) {
+    .dropdown__option {
+        width: auto;
+    }
 }
 
