@@ -22,6 +22,11 @@
     --shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     background-color: var(--background-color);
 }
@@ -45,7 +50,7 @@ a {
     text-decoration: none;
 }
 
-.dropdown__option a, .dropdown__option button {
+.menu__option a, .menu__option button {
     display: block;
     width: 100%;
     padding: 1em;
@@ -53,6 +58,7 @@ a {
     border: none;
     outline: none;
     background: none;
+    white-space: nowrap;
 }
 
 button:hover {

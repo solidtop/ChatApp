@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { FormComponent } from '../../../../shared/components/form/form.component';
-import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
 import { TextFieldComponent } from '../../../../shared/components/text-field/text-field.component';
 import { IdentityError } from '../../interfaces/identity-error.interface';
 import { RegisterRequest } from '../../interfaces/register-request.interface';
@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register-form',
-  imports: [ReactiveFormsModule, FormComponent, TextFieldComponent, PrimaryButtonComponent],
+  imports: [ReactiveFormsModule, FormComponent, TextFieldComponent, ButtonComponent],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.css'
 })

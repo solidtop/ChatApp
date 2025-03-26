@@ -5,27 +5,27 @@
         (channelChanged)="changeChannel($event)" 
     />
 
-    <div class="chat__messages">
-        <ul class="chat__messages-list">
-            @for (message of chatState.messages$ | async; track message.id) {
-                <li class="chat__message">
-                    <div class="chat__message-user">
-                        @if (message.user.avatarImageUrl) {
-                            <img class="chat__message-avatar" [src]="message.user.avatarImageUrl" alt="User Avatar" />
-                        } 
-                        
-                        <span class="chat__message-username" [style.color]="message.user.displayColor">
-                            [{{message.user.username }}]:
-                        </span>
-                    </div>
-
-                    <span class="chat__message-text" [style.color]="message.textColor"> 
-                        {{ message.text }}
+    <ul class="chat__messages" (scroll)="isNearBottom()" #scrollList>
+        @for (message of chatState.messages$ | async; track message.id) {
+            <li class="chat__message" #scrollItem>
+                <div class="chat__message-user">
+                    @if (message.user.avatarImageUrl) {
+                        <img class="chat__message-avatar" [src]="message.user.avatarImageUrl" alt="User Avatar" />
+                    } 
+                    
+                    <span class="chat__message-username" [style.color]="message.user.displayColor">
+                        [{{message.user.username }}]:
                     </span>
-                </li>
-            }
-        </ul>
-    </div>
+                </div>
 
-    <app-chat-input (messageSubmitted)="sendMessage($event)" />
+                <span class="chat__message-text" [style.color]="message.textColor"> 
+                    {{ message.text }}
+                </span>
+            </li>
+        }
+    </ul>
+
+    <div class="chat__input">
+        <app-chat-input (messageSubmitted)="sendMessage($event)" />
+    </div>
 </div>

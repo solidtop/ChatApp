@@ -9,9 +9,9 @@ import { AccountStateService } from './features/account/services/account-state.s
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  private readonly accountStateService = inject(AccountStateService);
+  private readonly accountState = inject(AccountStateService);
 
   ngOnInit(): void {
-    this.accountStateService.loadDetails();
+    this.accountState.loadDetails();
   }
 }

@@ -1,15 +1,15 @@
 import { Component, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject } from '@microsoft/signalr';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { FormComponent } from '../../../../shared/components/form/form.component';
-import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
 import { TextFieldComponent } from '../../../../shared/components/text-field/text-field.component';
 import { LoginRequest } from '../../interfaces/login-request.interface';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule, FormComponent, TextFieldComponent, PrimaryButtonComponent],
+  imports: [ReactiveFormsModule, FormComponent, TextFieldComponent, ButtonComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })

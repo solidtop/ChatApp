@@ -1,12 +1,12 @@
 import { Component, ElementRef, HostListener, inject, input } from '@angular/core';
 
 @Component({
-  selector: 'app-dropdown',
+  selector: 'app-menu',
   imports: [],
-  templateUrl: './dropdown.component.html',
-  styleUrl: './dropdown.component.css'
+  templateUrl: './menu.component.html',
+  styleUrl: './menu.component.css'
 })
-export class DropdownComponent {
+export class MenuComponent {
   private readonly elementRef = inject(ElementRef);
 
   label = input<string>();

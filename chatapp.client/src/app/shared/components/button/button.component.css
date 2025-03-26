@@ -1,0 +1,58 @@
+.button {
+    padding: 1em 2em;
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--text-primary-color);
+}
+
+.text {
+    background: none;
+    color: var(--primary-color);
+
+    &:hover {
+        color: var(--primary-hover-color);
+    }
+
+    &:active {
+        color: var(--primary-active-color);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        color: var(--primary-color);
+    }
+}
+
+.primary {
+    background-color: var(--primary-color);
+
+    &:hover {
+        background-color: var(--primary-hover-color);
+    }
+
+    &:active {
+        background-color: var(--primary-active-color);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        background-color: var(--primary-color);
+    }
+}
+
+.secondary {
+    background-color: var(--secondary-color);
+
+    &:hover {
+        background-color: var(--secondary-hover-color);
+    }
+
+    &:active {
+        background-color: var(--secondary-active-color);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        background-color: var(--secondary-color);
+    }
+}

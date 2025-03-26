@@ -1,11 +1,12 @@
-.dropdown {
+.menu {
     position: relative;
     display: flex;
     align-items: center;
+    gap: 0.5em;
     width: fit-content;
 }
 
-.dropdown__toggle {
+.menu__toggle {
     position: absolute;
     inset: 0;
     background: none;
@@ -13,15 +14,21 @@
     z-index: 1;
 }
 
-.dropdown__label {
+.menu__label {
     display: none;
 }
 
-.dropdown__menu {
+.menu__content {
     position: absolute;
     top: 100%;
     overflow: hidden;
     border: var(--border);
     border-radius: var(--border-radius);
+}
+
+@media screen and (min-width: 600px) {
+    .menu__label {
+        display: block;
+    }
 }
 

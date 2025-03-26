@@ -1,21 +1,21 @@
-.dropdown__option {
+.menu__option {
     display: flex;
     align-items: center;
     width: 50vw;
     background-color: var(--surface-color);
 }
 
-.dropdown__option:hover {
+.menu__option:hover {
     cursor: pointer;
     background-color: var(--primary-hover-color);
 }
 
-.dropdown__option:active {
+.menu__option:active {
     background-color: var(--primary-active-color);
 }
 
 @media screen and (min-width: 600px) {
-    .dropdown__option {
+    .menu__option {
         width: auto;
     }
 }

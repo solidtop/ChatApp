@@ -10,12 +10,12 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
   styleUrl: './login-page.component.css'
 })
 export class LoginPageComponent {
-  private readonly accountStateService = inject(AccountStateService);
+  private readonly accountState = inject(AccountStateService);
   private readonly router = inject(Router);
   
   onLoginCompleted() {
     console.log('Login completed!');
-    this.accountStateService.loadDetails();
+    this.accountState.loadDetails();
     this.router.navigateByUrl('/');
   }
 }

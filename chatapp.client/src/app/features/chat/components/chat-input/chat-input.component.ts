@@ -11,7 +11,7 @@ import { AccountStateService } from '../../../account/services/account-state.ser
 })
 export class ChatInputComponent {
   private readonly formBuilder = inject(FormBuilder);
-  public readonly accountStateService = inject(AccountStateService);
+  readonly accountStateService = inject(AccountStateService);
   messageSubmitted = output<string>();
   
   readonly form: FormGroup = this.formBuilder.group({

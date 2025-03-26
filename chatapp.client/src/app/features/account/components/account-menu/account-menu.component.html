@@ -1,35 +1,26 @@
 @if (accountState.details$ | async; as account) {
-    <app-dropdown [label]="account.username">
+    <app-menu [label]="account.username">
         @if (account.avatar) {
-            <app-icon 
-                [src]="account.avatar.imageUrl" 
-                alt="User Avatar" 
-                size="md" 
-                shape="circle" 
-            />
+            <app-avatar [src]="account.avatar.imageUrl" alt="User Avatar" />
         }
 
-        <app-dropdown-option>
+        <app-menu-option>
             <button (click)="logout()">Log Out</button>
-        </app-dropdown-option>
-    </app-dropdown>
+        </app-menu-option>
+    </app-menu>
 }
 @else {
-    <app-dropdown label="Account">
-        <app-icon 
-            src="https://www.gravatar.com/avatar/?d=mp" 
-            alt="User Avatar"
-            size="md"
-            shape="circle" 
-        />
+    <app-menu label="Account">
+        <app-avatar src="https://www.gravatar.com/avatar/?d=mp" alt="User Avatar" />
 
-        <app-dropdown-option>
+        <app-menu-option>
             <a routerLink="/login">Log In</a>
-        </app-dropdown-option>
+        </app-menu-option>
 
-        <app-dropdown-option>
+        <app-menu-option>
             <a routerLink="/register">Create Account</a>
-        </app-dropdown-option>
-    </app-dropdown>
+        </app-menu-option>
+    </app-menu>
 }
+
 

@@ -1,15 +1,15 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DropdownOptionComponent } from '../../../../shared/components/dropdown-option/dropdown-option.component';
-import { DropdownComponent } from '../../../../shared/components/dropdown/dropdown.component';
-import { IconComponent } from '../../../../shared/components/icon/icon.component';
+import { AvatarComponent } from '../../../../shared/components/avatar/avatar.component';
+import { MenuOptionComponent } from '../../../../shared/components/menu-option/menu-option.component';
+import { MenuComponent } from '../../../../shared/components/menu/menu.component';
 import { AuthService } from '../../../auth/services/auth.service';
 import { AccountStateService } from '../../services/account-state.service';
 
 @Component({
   selector: 'app-account-menu',
-  imports: [AsyncPipe, RouterLink, DropdownComponent, DropdownOptionComponent, IconComponent],
+  imports: [AsyncPipe, RouterLink, MenuComponent, MenuOptionComponent, AvatarComponent],
   templateUrl: './account-menu.component.html',
   styleUrl: './account-menu.component.css'
 })

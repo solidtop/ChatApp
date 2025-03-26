@@ -9,5 +9,5 @@ import { ChatComponent } from '../../chat/components/chat/chat.component';
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
-
+  
 }

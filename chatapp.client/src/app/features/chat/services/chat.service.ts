@@ -17,7 +17,7 @@ export class ChatService extends ApiService {
   }
 
   public getLatestMessages(channelId: number) : Observable<ChatMessageResponse[]> {
-     return this.http.get<ChatMessageResponse[]>(`${this.chatUrl}/channels/${channelId}/messages?count=10`, {
+     return this.http.get<ChatMessageResponse[]>(`${this.chatUrl}/channels/${channelId}/messages?count=30`, {
       withCredentials: true,
     });
   }

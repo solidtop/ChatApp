@@ -1,0 +1,14 @@
+<div class="menu">
+    <button class="menu__toggle" (click)="toggle()"></button>
+    <ng-content select="app-avatar" />
+    <ng-content select="app-icon" />
+    <span class="menu__label">{{ label() }}</span>
+
+    @if (isOpen) {
+        <div class="menu__content">
+            <ul class="menu__options">
+              <ng-content select="app-menu-option" />
+            </ul>
+        </div>
+    }
+</div>

@@ -1,17 +1,19 @@
 .chat {
-    padding: 1em;
-    height: 100vh;
+}
+
+.chat__input {
+    flex:  0 1 auto;
 }
 
 .chat__messages {
-}
-
-.chat__message-list {
-    
+    height: 500px;
+    overflow-y: scroll;
+    background-color: var(--surface-color);
 }
 
 .chat__message {
     padding: 5px;
+    overflow: hidden;
 }
 
 .chat__message-timestamp {
@@ -23,12 +25,12 @@
 }
 
 .chat__message-avatar {
-    height: 18px;
+    height: 28px;
 }
 
-.chat__message-username {
-
+.chat__message-username, .chat__message-text {
+    font-size: 1.5rem;
 }
 
-.chat__message-text {
+.chat__input {
 }
