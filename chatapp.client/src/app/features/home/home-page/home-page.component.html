@@ -1,3 +1,7 @@
 <app-main-header />
-<app-chat />
 
+@if (authService.isAuthenticated() | async) {
+    <app-chat />
+} @else {
+    <p>Login to access the chat</p>
+}
