@@ -22,7 +22,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   constructor() {
     effect(() => {
-      this.scrollItems();
+      const items = this.scrollItems();
+
+      if (items.length === 0) 
+        return;
 
       if (this.isNearBottom() || this.shouldForceScroll) {
         this.scrollToBottom();
