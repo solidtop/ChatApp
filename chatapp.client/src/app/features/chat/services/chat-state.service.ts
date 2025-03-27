@@ -16,7 +16,6 @@ export class ChatStateService {
 
   public channels$!: Observable<ChatChannel[]>;
   public messages$!: Observable<ChatMessageResponse[]>;
-
   public currentChannelId!: number;
 
   public load(): void {
@@ -36,11 +35,11 @@ export class ChatStateService {
 
   private loadMessages(): void {
     const initialMessages$ = this.chatService.getLatestMessages(this.currentChannelId);
-    
+
     const newMessages$ = this.chatHubService.newMessage$.pipe(
       map((message) => [message])
     );
-
+  
     this.messages$ = concat(initialMessages$, newMessages$).pipe(
       scan((allMessages, newMessages) => [...allMessages, ...newMessages])
     );

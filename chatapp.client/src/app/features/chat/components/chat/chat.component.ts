@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   scrollItems = viewChildren<ElementRef<HTMLLIElement>>('scrollItem');
   shouldForceScroll = true;
 
-  constructor() {
+  constructor() { 
     effect(() => {
       const items = this.scrollItems();
 

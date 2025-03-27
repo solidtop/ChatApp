@@ -33,6 +33,7 @@ export class ChatHubService extends ApiService {
   }
 
   public async stopConnection(): Promise<void> {
+    this.connection.off('ReceiveMessage');
     return this.connection.stop();
   }
 
