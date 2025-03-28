@@ -1,46 +1,36 @@
 :root {
-    /* Breakpoints */
-    --bp-sm: 600px;
-    --bp-md: 768px;
-    --bp-lg: 992px;
-
-    --primary-color: #637288;
+    /* Colors */
+    --primary-color: #008170;
     --primary-hover-color: #7e94b6;
     --primary-active-color: #454f5f;
-    --secondary-color: #14171F; 
+    --secondary-color: #005B41;
     --secondary-hover-color: #292f41;
     --secondary-active-color: #000000;
-    --background-color: #0F172B;
-    --surface-color: #1E293C;
+    --background-color: #0F0F0F;
+    --surface-color: #232D3F;
     --error-color: rgb(165, 49, 49);
-    --text-primary-color: #F8FFFF;
+    --text-primary-color: #F2F2F2;
     --text-secondary-color: #708095;
 
-    --border: solid 2px rgba(255, 255, 255, 0.1);
+    --border: solid 2px rgba(255, 255, 255, 0);
     --border-radius: 10px;
-
     --shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 html, body {
     width: 100%;
     height: 100%;
-}
-
-body {
+    font-family: 'Roboto';
     background-color: var(--background-color);
-}
-
-h1, h2, h3 {
-    margin: 0.5em 0;
 }
 
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto';
     color: var(--text-primary-color);
 }
+
+/* Element styling */
 
 ul {
     list-style: none;
@@ -48,6 +38,24 @@ ul {
 
 a {
     text-decoration: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+input {
+    color-scheme: dark;
+}
+
+/* Custom classes */
+
+.container {
+    margin: 1em;
+    padding: 1em;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    background-color: var(--surface-color);
 }
 
 .menu__option a, .menu__option button {
@@ -61,6 +69,4 @@ a {
     white-space: nowrap;
 }
 
-button:hover {
-    cursor: pointer;
-}
+

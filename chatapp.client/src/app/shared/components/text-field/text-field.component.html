@@ -6,12 +6,14 @@
         [id]="id()" 
         [type]="type()"
         [ngModel]="value()"
-        [value]="value()"
         (ngModelChange)="onChange($event)"
         (blur)="onTouched()"
         [placeholder]="placeholder()" 
         [disabled]="disabled()" 
     />
+
+    <ng-content select="app-error" />
+    <ng-content select="app-hint" />
 </div>
 
 

@@ -15,10 +15,19 @@
     border: var(--border);
     border-radius: var(--border-radius);
     color: var(--text-primary-color);
-    background-color: var(--background-color);
+    background-color: #005B41;
+}
+
+:host(.ng-invalid) .text-field__input {
+    border: 1px solid var(--error-color);
 }
 
 .text-field__input::placeholder {
-    color: var(--text-secondary-color);
+    color: var(--text-primary-color);
+    opacity: 0.5;
+}
+
+.text-field__helper-text {
+    color: red;
 }
 

@@ -1,15 +1,14 @@
 import { Component, inject, output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject } from '@microsoft/signalr';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
-import { FormComponent } from '../../../../shared/components/form/form.component';
 import { TextFieldComponent } from '../../../../shared/components/text-field/text-field.component';
 import { LoginRequest } from '../../interfaces/login-request.interface';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule, FormComponent, TextFieldComponent, ButtonComponent],
+  imports: [ReactiveFormsModule, TextFieldComponent, ButtonComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
@@ -22,7 +21,7 @@ export class LoginFormComponent {
 
   readonly form: FormGroup = this.formBuilder.group({
     email: ['', Validators.email],
-    password: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
   onSubmit(ev: Event) {
@@ -36,5 +35,13 @@ export class LoginFormComponent {
         error: () => this.loginFailed = true,
         complete: () => this.loginCompleted.emit(),
       });
+  }
+
+  get email(): AbstractControl<string> | null {
+    return this.form.get('email');
+  }
+
+  get password(): AbstractControl<string> | null {
+    return this.form.get('password');
   }
 }

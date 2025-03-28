@@ -10,7 +10,7 @@
             <li class="chat__message" #scrollItem>
                 <div class="chat__message-user">
                     @if (message.user.avatarImageUrl) {
-                        <img class="chat__message-avatar" [src]="message.user.avatarImageUrl" alt="User Avatar" />
+                        <app-avatar [src]="message.user.avatarImageUrl" alt="User Avatar" size="small" />
                     } 
                     
                     <span class="chat__message-username" [style.color]="message.user.displayColor">

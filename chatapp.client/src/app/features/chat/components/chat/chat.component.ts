@@ -1,5 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, effect, ElementRef, inject, OnDestroy, OnInit, viewChild, viewChildren } from '@angular/core';
+import { AvatarComponent } from "../../../../shared/components/avatar/avatar.component";
 import { ChatHubService } from '../../services/chat-hub.service';
 import { ChatStateService } from '../../services/chat-state.service';
 import { ChannelInputComponent } from '../channel-input/channel-input.component';
@@ -7,7 +8,7 @@ import { ChatInputComponent } from '../chat-input/chat-input.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [ChannelInputComponent, ChatInputComponent, AsyncPipe],
+  imports: [ChannelInputComponent, ChatInputComponent, AsyncPipe, AvatarComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })

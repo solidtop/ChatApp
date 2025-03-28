@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, forwardRef, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -9,15 +9,16 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => TextFieldComponent), 
+    useExisting: TextFieldComponent, 
     multi: true,
   }]
 })
 export class TextFieldComponent implements ControlValueAccessor {
   id = input<string>();
-  type = input<string>();
+  type = input<'text' | 'email' | 'password'>('text');
   label = input<string>();
   placeholder = input<string>();
+  helperText = input<string>();
 
   value = signal<string>('');
   disabled = signal<boolean>(false);

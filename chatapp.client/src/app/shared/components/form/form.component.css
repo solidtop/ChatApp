@@ -1,5 +1,4 @@
 .form-section {
-    margin: 1em;
     padding: 1em;
     border-radius: var(--border-radius);
     border: var(--border);
@@ -9,18 +8,12 @@
 .form-section__form {
     padding: 1em;
     border-radius: var(--border-radius);
-    background-color: var(--surface-color);
     border: var(--border);
-    box-shadow: var(--shadow);
 }
 
 .form-section__errors {
     margin: 1em 0;
-
-    &::content {
-        font-size: 0.8rem;
-        color: var(--error-color);
-    }
+    font-size: 0.8rem;
 }
 
 .form-section__actions {
