@@ -1,4 +1,5 @@
 using ChatApp.Server.Common.Exceptions;
+using ChatApp.Server.Common.Utils;
 using ChatApp.Server.Data;
 using ChatApp.Server.Extensions;
 using ChatApp.Server.Features.Account;
@@ -39,6 +40,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAvatarService, AvatarService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<ColorGenerator>();
 
 var app = builder.Build();
 

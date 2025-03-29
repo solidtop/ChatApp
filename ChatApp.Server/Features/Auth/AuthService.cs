@@ -1,12 +1,14 @@
-﻿using ChatApp.Server.Features.Auth.Requests;
+﻿using ChatApp.Server.Common.Utils;
+using ChatApp.Server.Features.Auth.Requests;
 using Microsoft.AspNetCore.Identity;
 
 namespace ChatApp.Server.Features.Auth;
 
-public class AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IAuthService
+public class AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ColorGenerator colorGenerator) : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
+    private readonly ColorGenerator _colorGenerator = colorGenerator;
 
     public async Task<IdentityResult> RegisterAsync(RegisterRequest request)
     {
@@ -14,7 +16,7 @@ public class AuthService(UserManager<ApplicationUser> userManager, SignInManager
         {
             UserName = request.Username,
             Email = request.Email,
-            DisplayColor = "#FF0000",
+            DisplayColor = _colorGenerator.Generate(),
             AvatarId = 1
         };
 
