@@ -1,4 +1,5 @@
 ﻿
+using System.Text.RegularExpressions;
 using ChatApp.Server.Common.Results;
 using ChatApp.Server.Data;
 using ChatApp.Server.Extensions;
@@ -68,7 +69,7 @@ public class ChatService(ApplicationDbContext context, UserManager<ApplicationUs
 
         var newMessage = new ChatMessage
         {
-            Text = request.Text,
+            Text = SanitizeText(request.Text),
             Timestamp = DateTime.UtcNow,
             Channel = channel,
             User = user,
@@ -78,6 +79,18 @@ public class ChatService(ApplicationDbContext context, UserManager<ApplicationUs
         await _context.SaveChangesAsync();
 
         return Result.Ok(ChatMessageResponse.FromChatMessage(newMessage));
+    }
+
+    private static string SanitizeText(string text)
+    {
+        string pattern = @"[^a-zA-Z0-9\s~`!@#$%^&*()-_=+{}|;:'<>,.?/\\[\]\""]";
+
+        if (Regex.IsMatch(text, pattern))
+        {
+            text = Regex.Replace(text, pattern, "*");
+        }
+
+        return text;
     }
 }
 
