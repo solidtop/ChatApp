@@ -29,7 +29,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddOpenApiWithConfig();
 
-builder.Services.AddSignalRWithConfig();
+builder.Services.AddSignalR();
 
 builder.Services.AddExceptionHandler<ApiExceptionHandler>();
 builder.Services.AddProblemDetails();

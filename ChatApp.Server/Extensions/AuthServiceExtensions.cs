@@ -90,6 +90,7 @@ public static class AuthServiceExtensions
                 {
                     UserName = username,
                     Email = email,
+                    DisplayColor = "#8A2BE2",
                     AvatarId = 1,
                 };
 
