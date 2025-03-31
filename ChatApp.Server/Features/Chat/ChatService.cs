@@ -4,6 +4,7 @@ using ChatApp.Server.Common.Results;
 using ChatApp.Server.Data;
 using ChatApp.Server.Extensions;
 using ChatApp.Server.Features.Auth;
+using ChatApp.Server.Features.Chat.Channels;
 using ChatApp.Server.Features.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +17,13 @@ public class ChatService(ApplicationDbContext context, UserManager<ApplicationUs
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly ChatMessageValidator _messageValidator = messageValidator;
 
-    public async Task<List<ChatChannel>> GetChannelsAsync()
+    public async Task<List<ChatChannelResponse>> GetChannelsAsync(string userId)
     {
-        return await _context.ChatChannels.ToListAsync();
+        var channels = await _context.ChatChannels.ToListAsync();
+        var user = await _userManager.FindByIdAsync(userId);
+        var userRoles = user != null ? await _userManager.GetRolesAsync(user) : [];
+
+        return [.. channels.Select(channel => ChatChannelResponse.FromChatChannel(channel, userRoles))];
     }
 
     public async Task<Result<ChatChannel>> GetChannelAsync(int channelId)

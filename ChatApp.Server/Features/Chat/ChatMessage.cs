@@ -1,4 +1,5 @@
 ﻿using ChatApp.Server.Features.Auth;
+using ChatApp.Server.Features.Chat.Channels;
 
 namespace ChatApp.Server.Features.Chat;
 

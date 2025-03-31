@@ -10,6 +10,7 @@
                 [value]="channel.id"
                 (change)="changeChannel(channel)"
                 [checked]="isCurrentChannel(channel)"
+                [disabled]="!channel.hasAccess"
             />
         </li>
     }

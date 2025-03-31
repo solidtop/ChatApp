@@ -2,6 +2,7 @@
 using ChatApp.Server.Features.Auth;
 using ChatApp.Server.Features.Avatars;
 using ChatApp.Server.Features.Chat;
+using ChatApp.Server.Features.Chat.Channels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,8 +34,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
         // Seed chat channels
         builder.Entity<ChatChannel>().HasData(
-            new ChatChannel() { Id = 1, Name = "global" },
-            new ChatChannel() { Id = 2, Name = "admin" }
+            new ChatChannel() { Id = 1, Name = "global", AllowedRoles = [] },
+            new ChatChannel() { Id = 2, Name = "admin", AllowedRoles = ["Admin"] }
         );
     }
 }

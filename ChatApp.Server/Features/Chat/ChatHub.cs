@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using ChatApp.Server.Features.Chat.Channels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
@@ -13,6 +14,12 @@ public class ChatHub(IChatService chatService, ILogger<ChatHub> logger) : Hub
     public async Task JoinChannel(int channelId)
     {
         var channel = await GetChannelOrThrow(channelId);
+
+        var hasAccess = channel.AllowedRoles.Length == 0 ||
+            channel.AllowedRoles.Any(role => Context.User!.IsInRole(role));
+
+        if (!hasAccess)
+            return;
 
         await Groups.AddToGroupAsync(Context.ConnectionId, channel.Name);
 

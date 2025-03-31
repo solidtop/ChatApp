@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using ChatApp.Server.Common.Results;
+using ChatApp.Server.Features.Chat.Channels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,16 @@ public class ChatController(IChatService chatService) : ControllerBase
 
     [HttpGet("channels")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<ChatChannel>>> GetChannels()
+    public async Task<ActionResult<List<ChatChannelResponse>>> GetChannels()
     {
-        var channels = await _chatService.GetChannelsAsync();
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId is null)
+        {
+            return Unauthorized();
+        }
+
+        var channels = await _chatService.GetChannelsAsync(userId);
         return Ok(channels);
     }
 

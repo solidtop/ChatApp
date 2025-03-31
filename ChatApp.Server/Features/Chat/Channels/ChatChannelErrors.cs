@@ -1,6 +1,6 @@
 ﻿using ChatApp.Server.Common.Results;
 
-namespace ChatApp.Server.Features.Chat;
+namespace ChatApp.Server.Features.Chat.Channels;
 
 public static class ChatChannelErrors
 {

@@ -26,5 +26,6 @@ export class AccountStateService {
 
   public clear(): void {
     this.detailsSubject.next(null);
+    localStorage.removeItem('currentChannelId');
   }
 }
