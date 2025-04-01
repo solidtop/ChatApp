@@ -1,0 +1,15 @@
+<form id="display-color-editor" (submit)="onSubmit($event)">
+    <input 
+        #displayColor
+        type="color" 
+        name="displayColor" 
+        id="displayColor"
+        [value]="selectedColor()"
+        (change)="selectedColor.set(displayColor.value)"
+    >
+    <label for="displayColor">DisplayColor</label>
+
+    <button type="submit">Save</button>
+</form>
+
+

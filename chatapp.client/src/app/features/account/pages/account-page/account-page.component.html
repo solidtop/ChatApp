@@ -1,1 +1,32 @@
-<p>account-page works!</p>
+<app-main-header />
+
+<h1>Account</h1>
+
+<section>
+    <h2>Information</h2>
+
+    <ul>
+        @if (accountState.details$ | async; as account) {
+            <li>{{ account.username }}</li>
+            <li>{{ account.email }}</li>
+        }
+    </ul>
+</section>
+
+<section>
+    <h2>Customization</h2>
+    
+    <h3>Change avatar</h3>
+
+    @if (accountState.details$ | async; as account) {
+        <app-avatar-editor 
+            [currentAvatar]="account.avatar" 
+            (avatarUpdated)="accountState.loadDetails()" 
+        />
+
+        <h3>Change display color</h3>
+        <app-display-color-editor [currentColor]="account.displayColor"/>
+    }
+</section>
+
+

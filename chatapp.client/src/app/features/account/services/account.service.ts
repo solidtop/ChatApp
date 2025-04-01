@@ -14,4 +14,16 @@ export class AccountService extends ApiService {
       withCredentials: true,
     });
   }
+
+  updateDisplayColor(color?: string): Observable<void> {
+      return this.http.put<void>(`${this.accountUrl}/display-color`, { color }, {
+      withCredentials: true,
+    });
+  }
+
+  updateAvatar(avatarId: number): Observable<void> {
+    return this.http.put<void>(`${this.accountUrl}/avatar`, { avatarId }, {
+      withCredentials: true,
+    });
+  }
 }

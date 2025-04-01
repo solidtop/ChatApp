@@ -1,0 +1,35 @@
+.avatar-editor {
+   & ul {
+        display: flex;
+        flex-wrap: wrap;
+   }
+
+   & button {
+       width: 80px;
+       height: 30px;
+       color: black;
+   }
+}
+
+.avatar-editor__container {
+    position: relative;
+    width: 100px;
+
+    & label {
+        display: none;
+    }
+
+    & input {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+    }
+
+    & img {
+        width: 100%;
+    } 
+}
+
+.avatar-editor__container:has(input:checked) {
+    outline: 5px solid blue;
+}

@@ -1,0 +1,18 @@
+<form id="avatar-editor" (submit)="onSubmit($event)" class="avatar-editor">
+    <ul>
+        @for (avatar of avatars$ | async; track avatar.id) {
+            <li class="avatar-editor__container">
+                <img [src]="avatar.imageUrl" [alt]="avatar.name">
+                <label [for]="avatar.name">{{ avatar.name }}</label>
+                <input 
+                    type="radio" 
+                    [id]="avatar.name" 
+                    name="avatar" 
+                    [checked]="avatar.id === selectedAvatar()?.id"
+                    (change)="selectedAvatar.set(avatar)">
+            </li>
+        }
+    </ul>
+
+    <button type="submit">Save</button>
+</form>
