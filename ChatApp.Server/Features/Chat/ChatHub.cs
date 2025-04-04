@@ -1,14 +1,16 @@
 ﻿using System.Security.Claims;
 using ChatApp.Server.Features.Chat.Channels;
+using ChatApp.Server.Features.Chat.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChatApp.Server.Features.Chat;
 
 [Authorize]
-public class ChatHub(IChatService chatService, ILogger<ChatHub> logger) : Hub
+public class ChatHub(IChatService chatService, IChatCommandProcessor commandProcessor, ILogger<ChatHub> logger) : Hub
 {
     private readonly IChatService _chatService = chatService;
+    private readonly IChatCommandProcessor _commandProcessor = commandProcessor;
     private readonly ILogger<ChatHub> _logger = logger;
 
     public async Task JoinChannel(int channelId)
@@ -48,6 +50,12 @@ public class ChatHub(IChatService chatService, ILogger<ChatHub> logger) : Hub
         }
 
         await Clients.Group(channel.Name).SendAsync("ReceiveMessage", result.Value);
+    }
+
+    public async Task ExecuteCommand(string commandText)
+    {
+        var userId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new HubException("User not found");
+        await _commandProcessor.ProcessAsync(userId, commandText);
     }
 
     private async Task<ChatChannel> GetChannelOrThrow(int channelId)

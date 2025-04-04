@@ -41,6 +41,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAvatarService, AvatarService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<ColorGenerator>();
+builder.Services.AddChatCommands();
 
 var app = builder.Build();
 

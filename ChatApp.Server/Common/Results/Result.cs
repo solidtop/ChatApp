@@ -21,7 +21,9 @@ public class Result
     public static Result Ok() => new(true, Error.None);
     public static Result<T> Ok<T>(T value) => new(value, true, Error.None);
     public static Result Fail(Error error) => new(false, error);
+    public static Result Fail(string message) => new(false, new(ErrorType.Validation, message));
     public static Result<T> Fail<T>(Error error) => new(default, false, error);
+    public static Result<T> Fail<T>(string message) => new(default, false, new(ErrorType.Validation, message));
 }
 
 public class Result<T>(T? value, bool isSuccess, Error error) : Result(isSuccess, error)
