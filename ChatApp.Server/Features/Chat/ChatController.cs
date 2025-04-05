@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using ChatApp.Server.Common.Results;
 using ChatApp.Server.Features.Chat.Channels;
+using ChatApp.Server.Features.Chat.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,10 @@ namespace ChatApp.Server.Features.Chat;
 [Authorize]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [Route("/api/chat")]
-public class ChatController(IChatService chatService) : ControllerBase
+public class ChatController(IChatService chatService, ChatCommandDefinitionProvider commandProvider) : ControllerBase
 {
     private readonly IChatService _chatService = chatService;
+    private readonly ChatCommandDefinitionProvider _commandProvider = commandProvider;
 
     [HttpGet("channels")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -68,5 +70,12 @@ public class ChatController(IChatService chatService) : ControllerBase
         var message = result.Value;
 
         return CreatedAtAction(nameof(CreateMessage), new { id = message?.Id }, message);
+    }
+
+    [HttpGet("commands")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public ActionResult<ChatCommandDefinition> GetCommands()
+    {
+        return Ok(_commandProvider.GetDefinitions());
     }
 }

@@ -28,7 +28,7 @@ public class ChatCommandProcessor(IEnumerable<IChatCommand> commands, ILogger<Ch
         var commandName = parts[0].ToLower();
         var args = parts.Skip(1).ToArray();
 
-        var command = _commands.FirstOrDefault(c => c.Command.Equals(commandName, StringComparison.OrdinalIgnoreCase));
+        var command = _commands.FirstOrDefault(cmd => cmd.Name.Equals(commandName, StringComparison.OrdinalIgnoreCase));
 
         if (command is null)
         {

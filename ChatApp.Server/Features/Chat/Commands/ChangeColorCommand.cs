@@ -9,7 +9,9 @@ public class ChangeColorCommand(IAccountService accountService) : IChatCommand
 {
     private readonly IAccountService _accountService = accountService;
 
-    public string Command => "color";
+    public string Name => "color";
+    public string Description => "Change your display color";
+    public string Usage => "/color <newColor>\nExample: /color #FF5733";
 
     public async Task<Result> ExecuteAsync(string userId, string[] args)
     {

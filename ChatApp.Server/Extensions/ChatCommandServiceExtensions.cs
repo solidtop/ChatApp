@@ -6,8 +6,10 @@ public static class ChatCommandServiceExtensions
 {
     public static IServiceCollection AddChatCommands(this IServiceCollection services)
     {
-        services.AddTransient<IChatCommand, ChangeColorCommand>();
         services.AddTransient<IChatCommandProcessor, ChatCommandProcessor>();
+        services.AddTransient<ChatCommandDefinitionProvider>();
+
+        services.AddTransient<IChatCommand, ChangeColorCommand>();
 
         return services;
     }
