@@ -3,14 +3,14 @@ import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microso
 import { Subject } from 'rxjs';
 import { ApiService } from '../../../shared/services/api.service';
 import { ChatMessageRequest } from '../interfaces/chat-message-request.interface';
-import { ChatMessageResponse } from '../interfaces/chat-message-response.interface';
+import { ChatMessage } from '../interfaces/chat-message.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatHubService extends ApiService {
   private readonly connection: HubConnection; 
-  private newMessageSubject = new Subject<ChatMessageResponse>();
+  private newMessageSubject = new Subject<ChatMessage>();
   public newMessage$ = this.newMessageSubject.asObservable();
 
   constructor() {
@@ -33,7 +33,6 @@ export class ChatHubService extends ApiService {
   }
 
   public async stopConnection(): Promise<void> {
-    this.connection.off('ReceiveMessage');
     return this.connection.stop();
   }
 
@@ -49,8 +48,12 @@ export class ChatHubService extends ApiService {
     return this.connection.send('SendMessage', request);
   }
 
+  public executeCommand(commandText: string): Promise<void> {
+    return this.connection.send('ExecuteCommand', commandText);
+  }
+
   private addMessageListener(): void {
-    this.connection.on('ReceiveMessage', (message: ChatMessageResponse) => {
+    this.connection.on('ReceiveMessage', (message: ChatMessage) => {
       this.newMessageSubject.next(message);
     });  
   }

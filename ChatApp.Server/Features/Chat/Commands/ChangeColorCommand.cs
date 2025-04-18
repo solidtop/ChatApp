@@ -1,5 +1,4 @@
-﻿
-using ChatApp.Server.Common.Results;
+﻿using ChatApp.Server.Common.Results;
 using ChatApp.Server.Features.Account;
 using ChatApp.Server.Features.Account.Requests;
 

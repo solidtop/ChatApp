@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatApp.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250308122921_AddDisplayColor")]
-    partial class AddDisplayColor
+    [Migration("20250418110254_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,18 +121,12 @@ namespace ChatApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            ImageUrl = "https://www.gravatar.com/avatar/?d=mp",
-                            Name = "Default"
-                        },
-                        new
-                        {
-                            Id = 2,
                             ImageUrl = "https://robohash.org/9fd81b488a86a7b3f61eebbca767b644?set=set4&bgset=&size=200x200",
                             Name = "Ninja cat"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 2,
                             ImageUrl = "https://robohash.org/752b7f90146751c9174f154aa4063bea?set=set4&bgset=&size=200x200",
                             Name = "Music cat"
                         });

@@ -1,7 +1,7 @@
-﻿using System.Security.Claims;
-using ChatApp.Server.Common.Results;
+﻿using ChatApp.Server.Common.Results;
 using ChatApp.Server.Features.Chat.Channels;
 using ChatApp.Server.Features.Chat.Commands;
+using ChatApp.Server.Features.Chat.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,71 +10,42 @@ namespace ChatApp.Server.Features.Chat;
 [ApiController]
 [Authorize]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-[Route("/api/chat")]
-public class ChatController(IChatService chatService, ChatCommandDefinitionProvider commandProvider) : ControllerBase
+[ProducesResponseType(StatusCodes.Status200OK)]
+[Route("api/chat")]
+public class ChatController(
+    IChannelService channelService,
+    IMessageService messageService,
+    CommandDefinitionProvider commandProvider) : ControllerBase
 {
-    private readonly IChatService _chatService = chatService;
-    private readonly ChatCommandDefinitionProvider _commandProvider = commandProvider;
+    private readonly IChannelService _channelService = channelService;
+    private readonly IMessageService _messageService = messageService;
+    private readonly CommandDefinitionProvider _commandProvider = commandProvider;
 
     [HttpGet("channels")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<ChatChannelResponse>>> GetChannels()
+    public ActionResult<List<ChatChannel>> GetChannels()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (userId is null)
-        {
-            return Unauthorized();
-        }
-
-        var channels = await _chatService.GetChannelsAsync(userId);
+        var channels = _channelService.GetAllChannels();
         return Ok(channels);
     }
 
     [HttpGet("channels/{id}")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<ChatChannel>> GetChannel(int id)
+    public ActionResult<ChatChannel> GetChannel(int id)
     {
-        var result = await _chatService.GetChannelAsync(id);
+        var result = _channelService.GetChannelById(id);
         return result.Match(Ok, ApiResults.Problem);
     }
 
     [HttpGet("channels/{id}/messages")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<ChatChannel>> GetChannelMessages(int id, [FromQuery] int count = 10)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<List<ChatMessage>> GetMessages(int id)
     {
-        var messages = await _chatService.GetLatestMessagesAsync(id, count);
-        return Ok(messages);
-    }
-
-    [HttpPost("messages")]
-    [Authorize(Roles = "Admin")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<ChatMessageResponse>> CreateMessage(ChatMessageRequest request)
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (userId is null)
-        {
-            return Unauthorized();
-        }
-
-        var result = await _chatService.CreateMessageAsync(userId, request);
-
-        if (result.IsFailure)
-        {
-            return ApiResults.Problem(result);
-        }
-
-        var message = result.Value;
-
-        return CreatedAtAction(nameof(CreateMessage), new { id = message?.Id }, message);
+        var result = _messageService.GetLatestMessages(id);
+        return result.Match(Ok, ApiResults.Problem);
     }
 
     [HttpGet("commands")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<ChatCommandDefinition> GetCommands()
+    public ActionResult<List<CommandDefinition>> GetCommands()
     {
         return Ok(_commandProvider.GetDefinitions());
     }

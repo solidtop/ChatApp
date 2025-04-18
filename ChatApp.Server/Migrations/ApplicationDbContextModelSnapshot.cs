@@ -118,90 +118,15 @@ namespace ChatApp.Server.Migrations
                         new
                         {
                             Id = 1,
-                            ImageUrl = "https://www.gravatar.com/avatar/?d=mp",
-                            Name = "Default"
-                        },
-                        new
-                        {
-                            Id = 2,
                             ImageUrl = "https://robohash.org/9fd81b488a86a7b3f61eebbca767b644?set=set4&bgset=&size=200x200",
                             Name = "Ninja cat"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 2,
                             ImageUrl = "https://robohash.org/752b7f90146751c9174f154aa4063bea?set=set4&bgset=&size=200x200",
                             Name = "Music cat"
                         });
-                });
-
-            modelBuilder.Entity("ChatApp.Server.Features.Chat.Channels.ChatChannel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.PrimitiveCollection<string>("AllowedRoles")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ChatChannels");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AllowedRoles = "[]",
-                            Name = "global"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AllowedRoles = "[]",
-                            Name = "admin"
-                        });
-                });
-
-            modelBuilder.Entity("ChatApp.Server.Features.Chat.ChatMessage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ChannelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("TextColor")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChannelId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ChatMessages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -343,25 +268,6 @@ namespace ChatApp.Server.Migrations
                         .HasForeignKey("AvatarId");
 
                     b.Navigation("Avatar");
-                });
-
-            modelBuilder.Entity("ChatApp.Server.Features.Chat.ChatMessage", b =>
-                {
-                    b.HasOne("ChatApp.Server.Features.Chat.Channels.ChatChannel", "Channel")
-                        .WithMany()
-                        .HasForeignKey("ChannelId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ChatApp.Server.Features.Auth.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Channel");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

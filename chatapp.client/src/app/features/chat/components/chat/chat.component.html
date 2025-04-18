@@ -9,12 +9,12 @@
         @for (message of chatState.messages$ | async; track message.id) {
             <li class="chat__message" #scrollItem>
                 <div class="chat__message-user">
-                    @if (message.user.avatarImageUrl) {
-                        <app-avatar [src]="message.user.avatarImageUrl" alt="User Avatar" size="small" />
+                    @if (message.user.avatarUrl) {
+                        <app-avatar [src]="message.user.avatarUrl" alt="User Avatar" size="small" />
                     } 
                     
-                    <span class="chat__message-username" [style.color]="message.user.displayColor">
-                        [{{message.user.username }}]:
+                    <span class="chat__message-name" [style.color]="message.user.displayColor">
+                        [{{message.user.displayName }}]:
                     </span>
                 </div>
 
@@ -26,6 +26,9 @@
     </ul>
 
     <div class="chat__input">
-        <app-chat-input (messageSubmitted)="sendMessage($event)" />
+        <app-chat-input 
+            (messageSubmitted)="sendMessage($event)" 
+            (commandSubmitted)="executeCommand($event)" 
+        />
     </div>
 </div>

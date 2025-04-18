@@ -2,10 +2,10 @@
 
 namespace ChatApp.Server.Features.Chat.Commands;
 
-public class ChatCommandProcessor(IEnumerable<IChatCommand> commands, ILogger<ChatCommandProcessor> logger) : IChatCommandProcessor
+public class CommandProcessor(IEnumerable<IChatCommand> commands, ILogger<CommandProcessor> logger) : ICommandProcessor
 {
     private readonly IEnumerable<IChatCommand> _commands = commands;
-    private readonly ILogger<ChatCommandProcessor> _logger = logger;
+    private readonly ILogger<CommandProcessor> _logger = logger;
 
     public async Task<Result> ProcessAsync(string userId, string commandText)
     {

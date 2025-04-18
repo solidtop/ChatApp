@@ -1,6 +1,6 @@
 export interface UserSummary {
     id: string;
-    username: string;
+    displayName: string;
     displayColor?: string;
-    avatarImageUrl?: string;
+    avatarUrl?: string;
 }

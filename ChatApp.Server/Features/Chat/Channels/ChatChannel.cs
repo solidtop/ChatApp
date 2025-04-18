@@ -1,8 +1,9 @@
 ﻿namespace ChatApp.Server.Features.Chat.Channels;
 
-public class ChatChannel
+public abstract class ChatChannel
 {
-    public int Id { get; set; }
-    public required string Name { get; set; }
-    public string[] AllowedRoles { get; set; } = [];
+    public abstract int Id { get; }
+    public abstract string Name { get; }
+    public abstract string Description { get; }
 }
+

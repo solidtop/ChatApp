@@ -4,9 +4,9 @@ namespace ChatApp.Server.Features.Users;
 
 public record UserSummary(
     string Id,
-    string? Username,
+    string? DisplayName,
     string? DisplayColor,
-    string? AvatarImageUrl
+    string? AvatarUrl
     )
 {
     public static UserSummary FromUser(ApplicationUser user)

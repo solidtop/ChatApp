@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../../shared/services/api.service';
 import { ChatChannel } from '../interfaces/chat-channel.interface';
-import { ChatMessageResponse } from '../interfaces/chat-message-response.interface';
+import { ChatMessage } from '../interfaces/chat-message.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,8 @@ export class ChatService extends ApiService {
     });
   }
 
-  public getLatestMessages(channelId: number) : Observable<ChatMessageResponse[]> {
-     return this.http.get<ChatMessageResponse[]>(`${this.chatUrl}/channels/${channelId}/messages?count=30`, {
+  public getLatestMessages(channelId: number) : Observable<ChatMessage[]> {
+     return this.http.get<ChatMessage[]>(`${this.chatUrl}/channels/${channelId}/messages`, {
       withCredentials: true,
     });
   }

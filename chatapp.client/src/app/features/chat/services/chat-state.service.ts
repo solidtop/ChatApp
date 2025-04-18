@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { concat, map, Observable, scan } from 'rxjs';
 import { StorageService } from '../../../shared/services/storage.service';
 import { ChatChannel } from '../interfaces/chat-channel.interface';
-import { ChatMessageResponse } from '../interfaces/chat-message-response.interface';
+import { ChatMessage } from '../interfaces/chat-message.interface';
 import { ChatHubService } from './chat-hub.service';
 import { ChatService } from './chat.service';
 
@@ -15,7 +15,7 @@ export class ChatStateService {
   private readonly storageService = inject(StorageService);
 
   public channels$!: Observable<ChatChannel[]>;
-  public messages$!: Observable<ChatMessageResponse[]>;
+  public messages$!: Observable<ChatMessage[]>;
   public currentChannelId!: number;
 
   public load(): void {

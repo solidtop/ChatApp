@@ -45,6 +45,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   async changeChannel(channelId: number): Promise<void> {
+    await this.chatHubService.leaveChannel(this.chatState.currentChannelId);
     await this.chatHubService.joinChannel(channelId);
     this.chatState.setCurrentChannel(channelId);
     this.chatState.update();
@@ -53,9 +54,13 @@ export class ChatComponent implements OnInit, OnDestroy {
   
   sendMessage(text: string): void {
     this.chatHubService.sendMessage({
-      text,
       channelId: this.chatState.currentChannelId,
+      text,
     });
+  }
+
+  executeCommand(commandText: string) {
+    this.chatHubService.executeCommand(commandText);
   }
 
   isNearBottom(): boolean {

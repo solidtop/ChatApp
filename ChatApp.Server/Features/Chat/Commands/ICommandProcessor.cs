@@ -2,7 +2,7 @@
 
 namespace ChatApp.Server.Features.Chat.Commands;
 
-public interface IChatCommandProcessor
+public interface ICommandProcessor
 {
     Task<Result> ProcessAsync(string userId, string commandText);
 }

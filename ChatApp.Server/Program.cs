@@ -4,7 +4,6 @@ using ChatApp.Server.Data;
 using ChatApp.Server.Extensions;
 using ChatApp.Server.Features.Account;
 using ChatApp.Server.Features.Avatars;
-using ChatApp.Server.Features.Chat;
 using ChatApp.Server.Features.Users;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -39,8 +38,10 @@ builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInte
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAvatarService, AvatarService>();
-builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<ColorGenerator>();
+
+builder.Services.AddChat();
+builder.Services.AddChatChannels();
 builder.Services.AddChatCommands();
 
 var app = builder.Build();

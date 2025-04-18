@@ -1,4 +1,4 @@
 export interface ChatMessageRequest {
-    text: string;
     channelId: number;
+    text: string;
 }
