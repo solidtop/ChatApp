@@ -8,15 +8,17 @@
     <ul class="chat__messages" (scroll)="isNearBottom()" #scrollList>
         @for (message of chatState.messages$ | async; track message.id) {
             <li class="chat__message" #scrollItem>
-                <div class="chat__message-user">
-                    @if (message.user.avatarUrl) {
-                        <app-avatar [src]="message.user.avatarUrl" alt="User Avatar" size="small" />
-                    } 
-                    
-                    <span class="chat__message-name" [style.color]="message.user.displayColor">
-                        [{{message.user.displayName }}]:
-                    </span>
-                </div>
+                @if (isChannelMessage(message)) {
+                    <div class="chat__message-user">
+                        @if (message.user.avatarUrl) {
+                            <app-avatar [src]="message.user.avatarUrl" alt="User Avatar" size="small" />
+                        } 
+                        
+                        <span class="chat__message-name" [style.color]="message.user.displayColor">
+                            [{{message.user.displayName }}]:
+                        </span>
+                    </div>
+                } 
 
                 <span class="chat__message-text" [style.color]="message.textColor"> 
                     {{ message.text }}

@@ -10,7 +10,7 @@ public class ChatHub(
     IMessageService messageService,
     ICommandProcessor commandProcessor,
     ILogger<ChatHub> logger
-    ) : Hub
+    ) : Hub<IChatClient>
 {
     private readonly IChannelService _channelService = channelService;
     private readonly IMessageService _messageService = messageService;
@@ -21,14 +21,13 @@ public class ChatHub(
     {
         var channel = GetChannelOrThrow(channelId);
         await Groups.AddToGroupAsync(Context.ConnectionId, channel.Name);
-        _logger.LogInformation("User joined {Channel} channel", channel.Name);
     }
 
     public async Task LeaveChannel(int channelId)
     {
         var channel = GetChannelOrThrow(channelId);
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, channel.Name);
-        _logger.LogInformation("User left {Channel} channel", channel.Name);
+        _logger.LogInformation("User left {Channel} channel.", channel.Name);
     }
 
     public async Task SendMessage(ChatMessageRequest request)
@@ -37,18 +36,24 @@ public class ChatHub(
         var userId = GetUserIdOrThrow();
         var result = await _messageService.CreateMessageAsync(userId, request);
 
-        if (result.IsFailure)
+        if (result.IsFailure || result.Value is null)
         {
             throw new HubException(result.Error.Message);
         }
 
-        await Clients.Group(channel.Name).SendAsync("ReceiveMessage", result.Value);
+        await Clients.Group(channel.Name).ReceiveMessage(result.Value);
     }
 
     public async Task ExecuteCommand(string commandText)
     {
         var userId = GetUserIdOrThrow();
-        await _commandProcessor.ProcessAsync(userId, commandText);
+        var result = await _commandProcessor.ProcessAsync(userId, commandText);
+
+        var notification = result.IsFailure
+            ? _messageService.CreateNotification(result.Error.Message)
+            : _messageService.CreateNotification(result.Value!);
+
+        await Clients.Caller.ReceiveMessage(notification);
     }
 
     private ChatChannel GetChannelOrThrow(int channelId)
@@ -65,6 +70,6 @@ public class ChatHub(
 
     private string GetUserIdOrThrow()
     {
-        return Context.UserIdentifier ?? throw new HubException("User not found");
+        return Context.UserIdentifier ?? throw new HubException("User not found.");
     }
 }

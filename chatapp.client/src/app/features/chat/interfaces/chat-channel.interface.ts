@@ -3,3 +3,4 @@ export interface ChatChannel {
     name: string;
     description?: string;
 }
+

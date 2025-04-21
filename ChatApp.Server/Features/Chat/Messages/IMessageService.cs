@@ -4,6 +4,7 @@ namespace ChatApp.Server.Features.Chat.Messages;
 
 public interface IMessageService
 {
-    Result<IReadOnlyList<ChatMessage>> GetLatestMessages(int channelId);
-    Task<Result<ChatMessage>> CreateMessageAsync(string userId, ChatMessageRequest request);
+    Result<IReadOnlyList<ChannelMessage>> GetLatestMessages(int channelId);
+    Task<Result<ChannelMessage>> CreateMessageAsync(string userId, ChatMessageRequest request);
+    NotificationMessage CreateNotification(string text);
 }

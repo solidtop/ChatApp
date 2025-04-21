@@ -1,6 +1,9 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, effect, ElementRef, inject, OnDestroy, OnInit, viewChild, viewChildren } from '@angular/core';
 import { AvatarComponent } from "../../../../shared/components/avatar/avatar.component";
+import { MessageType } from '../../enums/message-type.enum';
+import { ChannelMessage } from '../../interfaces/channel-message.interface';
+import { ChatMessage } from '../../interfaces/chat-message.interface';
 import { ChatHubService } from '../../services/chat-hub.service';
 import { ChatStateService } from '../../services/chat-state.service';
 import { ChannelInputComponent } from '../channel-input/channel-input.component';
@@ -76,5 +79,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     list.scroll({
       top: list.scrollHeight,
     });
+  }
+
+  isChannelMessage(message: ChatMessage): message is ChannelMessage {
+    return message.type === MessageType.Channel;
   }
 }

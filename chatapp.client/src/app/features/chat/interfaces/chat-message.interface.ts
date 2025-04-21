@@ -1,9 +1,9 @@
-import { UserSummary } from "../../user/interfaces/user-summary.interface";
+import { MessageType } from "../enums/message-type.enum";
 
 export interface ChatMessage {
     id: number;
-    timestamp: Date,
-    user: UserSummary,
+    type: MessageType;
+    timestamp: Date;
     text: string;
     textColor?: string;
 }

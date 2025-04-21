@@ -10,7 +10,7 @@ public static class ChatServiceExtensions
     {
         services.AddScoped<IChannelService, ChannelService>();
         services.AddScoped<IMessageService, MessageService>();
-        services.AddSingleton<IMessageBuffer, MessageBuffer>();
+        services.AddSingleton<IChannelMessageBuffer, ChannelMessageBuffer>();
 
         return services;
     }

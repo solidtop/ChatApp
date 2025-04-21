@@ -8,5 +8,5 @@ public interface IChatCommand
     string Description { get; }
     string Usage { get; }
 
-    Task<Result> ExecuteAsync(string userId, string[] args);
+    Task<Result<string>> ExecuteAsync(string userId, string[] args);
 }
