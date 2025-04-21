@@ -54,7 +54,6 @@ export class ChatHubService extends ApiService {
 
   private addMessageListener(): void {
     this.connection.on('ReceiveMessage', (message: ChatMessage) => {
-      console.log(message);
       this.newMessageSubject.next(message);
     });  
   }
