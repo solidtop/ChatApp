@@ -21,6 +21,7 @@ public class ChatHub(
     {
         var channel = GetChannelOrThrow(channelId);
         await Groups.AddToGroupAsync(Context.ConnectionId, channel.Name);
+        _logger.LogInformation("User joined {Channel} channel.", channel.Name);
     }
 
     public async Task LeaveChannel(int channelId)

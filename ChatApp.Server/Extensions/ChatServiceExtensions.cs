@@ -29,6 +29,7 @@ public static class ChatServiceExtensions
         services.AddTransient<CommandDefinitionProvider>();
 
         services.AddTransient<IChatCommand, ChangeColorCommand>();
+        services.AddTransient<IChatCommand, WhisperCommand>();
 
         return services;
     }

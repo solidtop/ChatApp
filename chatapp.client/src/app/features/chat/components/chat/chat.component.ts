@@ -73,15 +73,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     return position > list.scrollHeight - threshhold;
   }
 
+   isChannelMessage(message: ChatMessage): message is ChannelMessage {
+    return message.type === MessageType.Channel;
+  }
+
   private scrollToBottom(): void {
     const list = this.scrollList().nativeElement;
 
     list.scroll({
       top: list.scrollHeight,
     });
-  }
-
-  isChannelMessage(message: ChatMessage): message is ChannelMessage {
-    return message.type === MessageType.Channel;
   }
 }

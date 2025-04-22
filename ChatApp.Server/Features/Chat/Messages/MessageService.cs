@@ -65,6 +65,36 @@ public class MessageService(
         return Result.Ok(newMessage);
     }
 
+    public async Task<Result> SendWhisperAsync(string senderId, string targetName, string text)
+    {
+        var sender = await _userManager.FindByIdAsync(senderId);
+
+        if (sender is null)
+        {
+            return Result.Fail(UserErrors.NotFound(senderId));
+        }
+
+        var recipient = await _userManager.FindByNameAsync(targetName);
+
+        if (recipient is null)
+        {
+            return Result.Fail(UserErrors.NotFound(targetName));
+        }
+
+        var whisper = new WhisperMessage
+        {
+            User = UserSummary.FromUser(recipient),
+            Text = text,
+        };
+
+        await _hubContext.Clients.Users([
+            senderId,
+            recipient.Id,
+        ]).SendAsync("ReceiveMessage", whisper);
+
+        return Result.Ok();
+    }
+
     public NotificationMessage CreateNotification(string text)
     {
         return new NotificationMessage
