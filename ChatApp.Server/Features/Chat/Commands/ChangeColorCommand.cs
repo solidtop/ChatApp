@@ -19,21 +19,9 @@ public class ChangeColorCommand(IAccountService accountService) : IChatCommand
 
         if (result.IsFailure)
         {
-            string errorMessage;
-
-            if (result.Error is ValidationError validationError)
-            {
-                errorMessage = validationError.Errors.First();
-            }
-            else
-            {
-                errorMessage = result.Error.Message;
-            }
-
-            return Result.Fail<string>(errorMessage);
+            return Result.Fail<string>("Invalid color.");
         }
 
-
-        return Result.Ok("Your display color has been changed.");
+        return Result.Ok("Your color has been changed.");
     }
 }

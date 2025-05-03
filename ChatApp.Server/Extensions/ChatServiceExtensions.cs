@@ -1,4 +1,5 @@
-﻿using ChatApp.Server.Features.Chat.Channels;
+﻿using ChatApp.Server.Features.Chat;
+using ChatApp.Server.Features.Chat.Channels;
 using ChatApp.Server.Features.Chat.Commands;
 using ChatApp.Server.Features.Chat.Messages;
 
@@ -9,8 +10,8 @@ public static class ChatServiceExtensions
     public static IServiceCollection AddChat(this IServiceCollection services)
     {
         services.AddScoped<IChannelService, ChannelService>();
-        services.AddScoped<IMessageService, MessageService>();
         services.AddSingleton<IChannelMessageBuffer, ChannelMessageBuffer>();
+        services.AddScoped<IChatService, ChatService>();
 
         return services;
     }

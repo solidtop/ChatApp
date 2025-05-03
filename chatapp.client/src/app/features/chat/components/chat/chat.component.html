@@ -1,27 +1,27 @@
 <div class="chat">
     <app-channel-input 
-        [channels]="(chatState.channels$ | async) || []" 
-        [currentChannelId]="chatState.currentChannelId" 
+        [channels]="(chatState.channels())" 
+        [currentChannelId]="chatState.currentChannelId()" 
         (channelChanged)="changeChannel($event)" 
     />
 
     <ul class="chat__messages" (scroll)="isNearBottom()" #scrollList>
-        @for (message of chatState.messages$ | async; track message.id) {
-            <li class="chat__message" #scrollItem>
-                @if (isChannelMessage(message)) {
-                    <div class="chat__message-user">
+        @for (message of chatState.messages(); track message.id) {
+            <li [class]="'chat__message ' + getTypeName(message.type)" #scrollItem>
+                @if (message.user) { 
+                    <div class="chat-author">
                         @if (message.user.avatarUrl) {
                             <app-avatar [src]="message.user.avatarUrl" alt="User Avatar" size="small" />
                         } 
                         
-                        <span class="chat__message-name" [style.color]="message.user.displayColor">
+                        <span class="chat-author__display-name" [style.color]="message.user.displayColor">
                             [{{message.user.displayName }}]:
                         </span>
                     </div>
-                } 
+                }
 
-                <span class="chat__message-text" [style.color]="message.textColor"> 
-                    {{ message.text }}
+                <span class="chat__message-content"> 
+                    {{ message.content }}
                 </span>
             </li>
         }
@@ -29,7 +29,7 @@
 
     <div class="chat__input">
         <app-chat-input 
-            (messageSubmitted)="sendMessage($event)" 
+            (messageSubmitted)="sendChannelMessage($event)" 
             (commandSubmitted)="executeCommand($event)" 
         />
     </div>

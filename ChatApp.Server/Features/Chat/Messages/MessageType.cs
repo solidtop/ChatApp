@@ -6,4 +6,5 @@ public enum MessageType
     Whisper,
     Notification,
     Announcement,
+    Error,
 }

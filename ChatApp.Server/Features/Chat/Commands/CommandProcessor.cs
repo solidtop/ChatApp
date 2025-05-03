@@ -1,28 +1,27 @@
-﻿using ChatApp.Server.Common.Results;
+﻿namespace ChatApp.Server.Features.Chat.Commands;
 
-namespace ChatApp.Server.Features.Chat.Commands;
-
-public class CommandProcessor(IEnumerable<IChatCommand> commands, ILogger<CommandProcessor> logger) : ICommandProcessor
+public class CommandProcessor(IEnumerable<IChatCommand> commands, IChatService chatService, ILogger<CommandProcessor> logger) : ICommandProcessor
 {
     private readonly IEnumerable<IChatCommand> _commands = commands;
+    private readonly IChatService _chatService = chatService;
     private readonly ILogger<CommandProcessor> _logger = logger;
 
-    public async Task<Result<string>> ProcessAsync(string userId, string commandText)
+    public async Task ProcessAsync(string userId, string commandText)
     {
         _logger.LogInformation("Processing command from user {UserId}: {CommandText}.", userId, commandText);
 
         if (!commandText.StartsWith('/'))
         {
-            _logger.LogWarning("Invalid command format from user {UserId}: {CommandText}.", userId, commandText);
-            return Result.Fail<string>("Invalid command format.");
+            await NotifyErrorAsync(userId, "Commands must start with '/'");
+            return;
         }
 
         var parts = commandText[1..].Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         if (parts.Length == 0)
         {
-            _logger.LogWarning("No command specified from user {UserId}.", userId);
-            return Result.Fail<string>("No command specified.");
+            await NotifyErrorAsync(userId, "You must specify a command name.");
+            return;
         }
 
         var commandName = parts[0].ToLower();
@@ -32,8 +31,8 @@ public class CommandProcessor(IEnumerable<IChatCommand> commands, ILogger<Comman
 
         if (command is null)
         {
-            _logger.LogWarning("Command '/{CommandName}' not recognized from user {UserId}.", commandName, userId);
-            return Result.Fail<string>($"Command '/{commandName}' not recognized.");
+            await NotifyErrorAsync(userId, $"Unknown command '{commandName}.");
+            return;
         }
 
         var result = await command.ExecuteAsync(userId, args);
@@ -41,11 +40,20 @@ public class CommandProcessor(IEnumerable<IChatCommand> commands, ILogger<Comman
         if (result.IsFailure)
         {
             _logger.LogWarning("Command '{CommandName}' execution failed: {Error}.", commandName, result.Error.Message);
-            return result;
+            await NotifyErrorAsync(userId, result.Error.Message);
         }
+        else
+        {
+            _logger.LogInformation("Successfully executed command '{CommandName}' with args: {Args}.", commandName, args);
 
-        _logger.LogInformation("Successfully executed command '{CommandName}' with args: {Args}.", commandName, args);
-
-        return result;
+            if (!string.IsNullOrEmpty(result.Value))
+                await NotifySuccessAsync(userId, result.Value);
+        }
     }
+
+    private Task NotifySuccessAsync(string userId, string message) =>
+        _chatService.SendNotificationAsync(userId, message);
+
+    private Task NotifyErrorAsync(string userId, string error) =>
+        _chatService.SendErrorAsync(userId, error);
 }

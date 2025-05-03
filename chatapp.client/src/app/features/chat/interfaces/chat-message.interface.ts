@@ -1,9 +1,17 @@
-import { MessageType } from "../enums/message-type.enum";
+import { UserSummary } from "../../user/interfaces/user-summary.interface";
+
+export enum MessageType {
+    Channel,
+    Whisper,
+    Notification,
+    Announcement,
+    Error,
+}
 
 export interface ChatMessage {
     id: number;
     type: MessageType;
     timestamp: Date;
-    text: string;
-    textColor?: string;
+    user?: UserSummary;
+    content: string;
 }

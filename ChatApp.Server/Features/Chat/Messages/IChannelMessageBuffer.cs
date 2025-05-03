@@ -2,6 +2,6 @@
 
 public interface IChannelMessageBuffer
 {
-    void Add(int channelId, ChannelMessage message);
-    IReadOnlyList<ChannelMessage> GetAll(int channelId);
+    void Add(int channelId, ChatMessage message);
+    IReadOnlyList<ChatMessage> GetAll(int channelId);
 }

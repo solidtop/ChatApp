@@ -1,9 +1,6 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, effect, ElementRef, inject, OnDestroy, OnInit, viewChild, viewChildren } from '@angular/core';
 import { AvatarComponent } from "../../../../shared/components/avatar/avatar.component";
-import { MessageType } from '../../enums/message-type.enum';
-import { ChannelMessage } from '../../interfaces/channel-message.interface';
-import { ChatMessage } from '../../interfaces/chat-message.interface';
+import { MessageType } from '../../interfaces/chat-message.interface';
 import { ChatHubService } from '../../services/chat-hub.service';
 import { ChatStateService } from '../../services/chat-state.service';
 import { ChannelInputComponent } from '../channel-input/channel-input.component';
@@ -11,17 +8,19 @@ import { ChatInputComponent } from '../chat-input/chat-input.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [ChannelInputComponent, ChatInputComponent, AsyncPipe, AvatarComponent],
+  imports: [ChannelInputComponent, ChatInputComponent, AvatarComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  private readonly chatHubService = inject(ChatHubService);
+  readonly chatHubService = inject(ChatHubService);
   readonly chatState = inject(ChatStateService);
 
   scrollList = viewChild.required<ElementRef<HTMLUListElement>>('scrollList');
   scrollItems = viewChildren<ElementRef<HTMLLIElement>>('scrollItem');
   shouldForceScroll = true;
+
+  MessageType = MessageType;
 
   constructor() { 
     effect(() => {
@@ -39,8 +38,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     await this.chatHubService.startConnection();
-    this.chatState.load();
-    await this.chatHubService.joinChannel(this.chatState.currentChannelId);
+    await this.chatHubService.joinChannel(this.chatState.currentChannelId());
   }
   
   ngOnDestroy(): void {
@@ -48,18 +46,17 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   async changeChannel(channelId: number): Promise<void> {
-    await this.chatHubService.leaveChannel(this.chatState.currentChannelId);
+    await this.chatHubService.leaveChannel(this.chatState.currentChannelId());
     await this.chatHubService.joinChannel(channelId);
-    this.chatState.setCurrentChannel(channelId);
-    this.chatState.update();
+    this.chatState.currentChannelId.set(channelId);
     this.shouldForceScroll = true;
   }
   
-  sendMessage(text: string): void {
-    this.chatHubService.sendMessage({
-      channelId: this.chatState.currentChannelId,
-      text,
-    });
+  sendChannelMessage(content: string): void {
+    this.chatHubService.sendChannelMessage(
+      this.chatState.currentChannelId(),
+      content,
+    );
   }
 
   executeCommand(commandText: string) {
@@ -73,8 +70,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     return position > list.scrollHeight - threshhold;
   }
 
-   isChannelMessage(message: ChatMessage): message is ChannelMessage {
-    return message.type === MessageType.Channel;
+  getTypeName(type: MessageType): string {
+    switch (type) {
+      case MessageType.Channel: return 'channel';
+      case MessageType.Whisper: return 'whisper';
+      case MessageType.Notification: return 'notification';
+      case MessageType.Announcement: return 'announcement';
+      case MessageType.Error: return 'error';
+    }
   }
 
   private scrollToBottom(): void {

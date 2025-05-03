@@ -1,6 +1,3 @@
-.chat {
-}
-
 .chat__input {
     flex:  0 1 auto;
 }
@@ -14,23 +11,25 @@
 .chat__message {
     padding: 5px;
     overflow: hidden;
+
+    &.notification .chat__message-content {
+        color: orange;
+    }
+  
+    &.error .chat__message-content {
+        color: red;
+    }
 }
 
 .chat__message-timestamp {
     display: block;
 }
 
-.chat__message-user {
+.chat-author {
     display: inline-block;
 }
 
-.chat__message-avatar {
-    height: 28px;
-}
-
-.chat__message-name, .chat__message-text {
+.chat-author__display-name, .chat__message-content {
     font-size: 1.5rem;
 }
 
-.chat__input {
-}

@@ -14,11 +14,11 @@ namespace ChatApp.Server.Features.Chat;
 [Route("api/chat")]
 public class ChatController(
     IChannelService channelService,
-    IMessageService messageService,
+    IChannelMessageBuffer messageBuffer,
     CommandDefinitionProvider commandProvider) : ControllerBase
 {
     private readonly IChannelService _channelService = channelService;
-    private readonly IMessageService _messageService = messageService;
+    private readonly IChannelMessageBuffer _messageBuffer = messageBuffer;
     private readonly CommandDefinitionProvider _commandProvider = commandProvider;
 
     [HttpGet("channels")]
@@ -40,8 +40,14 @@ public class ChatController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public ActionResult<List<ChatMessage>> GetMessages(int id)
     {
-        var result = _messageService.GetLatestMessages(id);
-        return result.Match(Ok, ApiResults.Problem);
+        var result = _channelService.GetChannelById(id);
+
+        if (result.IsFailure)
+        {
+            return NotFound();
+        }
+
+        return Ok(_messageBuffer.GetAll(id));
     }
 
     [HttpGet("commands")]

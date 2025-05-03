@@ -1,7 +1,6 @@
-import { inject, Injectable } from '@angular/core';
-import { concat, map, Observable, scan } from 'rxjs';
+import { effect, inject, Injectable, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { StorageService } from '../../../shared/services/storage.service';
-import { ChatChannel } from '../interfaces/chat-channel.interface';
 import { ChatMessage } from '../interfaces/chat-message.interface';
 import { ChatHubService } from './chat-hub.service';
 import { ChatService } from './chat.service';
@@ -11,42 +10,29 @@ import { ChatService } from './chat.service';
 })
 export class ChatStateService {
   private readonly chatService = inject(ChatService);
-  private readonly chatHubService = inject(ChatHubService);
-  private readonly storageService = inject(StorageService);
+  private readonly chatHub = inject(ChatHubService);
+  private readonly storage = inject(StorageService);
 
-  public channels$!: Observable<ChatChannel[]>;
-  public messages$!: Observable<ChatMessage[]>;
-  public currentChannelId!: number;
+  public channels = toSignal(this.chatService.getChannels());
+  public messages = signal<ChatMessage[]>([]);
 
-  public load(): void {
-    this.channels$ = this.chatService.getChannels();
-    this.loadCurrentChannel();
-    this.loadMessages();
+  public currentChannelId = signal<number>(
+    this.storage.getLocal<number>('currentChannelId') ?? 1
+  );
+
+  constructor() {
+    effect(() => {
+      this.chatService
+      .getRecentMessages(this.currentChannelId())
+      .subscribe((recentMessages) => this.messages.set(recentMessages));
+
+      this.storage.setLocal('currentChannelId', this.currentChannelId());
+    });
+
+    effect(() => {
+      this.chatHub.onReceiveMessage((incomingMessage) => {
+        this.messages.update((currentMessages) => [...currentMessages, incomingMessage]);
+      });
+    });
   }
-
-  public update(): void {
-    this.loadMessages();
-  }
-
-  public setCurrentChannel(channelId: number): void {
-    this.currentChannelId = channelId;
-    this.storageService.setLocal('currentChannelId', channelId);
-  } 
-
-  private loadMessages(): void {
-    const initialMessages$ = this.chatService.getLatestMessages(this.currentChannelId);
-
-    const newMessages$ = this.chatHubService.newMessage$.pipe(
-      map((message) => [message])
-    );
-  
-    this.messages$ = concat(initialMessages$, newMessages$).pipe(
-      scan((allMessages, newMessages) => [...allMessages, ...newMessages])
-    );
-  }
-
-  private loadCurrentChannel(): void {
-    const channelId = this.storageService.getLocal<number>('currentChannelId');
-    this.currentChannelId = channelId || 1;
-  } 
 }

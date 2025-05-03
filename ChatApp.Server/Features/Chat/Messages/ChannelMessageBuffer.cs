@@ -7,17 +7,17 @@ namespace ChatApp.Server.Features.Chat.Messages;
 public class ChannelMessageBuffer : IChannelMessageBuffer
 {
     private const int Capacity = 50;
-    private readonly ConcurrentDictionary<int, CircularBuffer<ChannelMessage>> _buffers = [];
+    private readonly ConcurrentDictionary<int, CircularBuffer<ChatMessage>> _buffers = [];
 
-    public void Add(int channelId, ChannelMessage message)
+    public void Add(int channelId, ChatMessage message)
     {
         var buffer = _buffers.GetOrAdd(channelId,
-            _ => new CircularBuffer<ChannelMessage>(Capacity));
+            _ => new CircularBuffer<ChatMessage>(Capacity));
 
         buffer.Write(message);
     }
 
-    public IReadOnlyList<ChannelMessage> GetAll(int channelId) =>
+    public IReadOnlyList<ChatMessage> GetAll(int channelId) =>
         _buffers.TryGetValue(channelId, out var buffer)
             ? buffer.ReadAll() : [];
 }

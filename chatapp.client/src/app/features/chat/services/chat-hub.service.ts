@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { Subject } from 'rxjs';
 import { ApiService } from '../../../shared/services/api.service';
-import { ChatMessageRequest } from '../interfaces/chat-message-request.interface';
 import { ChatMessage } from '../interfaces/chat-message.interface';
 
 @Injectable({
@@ -10,9 +8,7 @@ import { ChatMessage } from '../interfaces/chat-message.interface';
 })
 export class ChatHubService extends ApiService {
   private readonly connection: HubConnection; 
-  private newMessageSubject = new Subject<ChatMessage>();
-  public newMessage$ = this.newMessageSubject.asObservable();
-
+ 
   constructor() {
     super();
 
@@ -28,7 +24,6 @@ export class ChatHubService extends ApiService {
   public async startConnection(): Promise<void> {
     return this.connection
       .start()
-      .then(() => this.addMessageListener())
       .catch((err) => console.error('Error while starting connection: ', err));
   }
 
@@ -44,17 +39,15 @@ export class ChatHubService extends ApiService {
     return this.connection.invoke('LeaveChannel', channelId);
   }
 
-  public sendMessage(request: ChatMessageRequest): Promise<void> {
-    return this.connection.send('SendMessage', request);
-  }
+  public sendChannelMessage(channelId: number, content: string): Promise<void> {
+    return this.connection.send('SendChannelMessage', channelId, content);
+  } 
 
   public executeCommand(commandText: string): Promise<void> {
     return this.connection.send('ExecuteCommand', commandText);
   }
 
-  private addMessageListener(): void {
-    this.connection.on('ReceiveMessage', (message: ChatMessage) => {
-      this.newMessageSubject.next(message);
-    });  
+  public onReceiveMessage(callback: (message: ChatMessage) => void) {
+    this.connection.on('ReceiveMessage', callback);
   }
 }

@@ -1,8 +1,6 @@
-﻿using ChatApp.Server.Common.Results;
-
-namespace ChatApp.Server.Features.Chat.Commands;
+﻿namespace ChatApp.Server.Features.Chat.Commands;
 
 public interface ICommandProcessor
 {
-    Task<Result<string>> ProcessAsync(string userId, string commandText);
+    Task ProcessAsync(string userId, string commandText);
 }
