@@ -8,16 +8,29 @@
     <ul class="chat__messages" (scroll)="isNearBottom()" #scrollList>
         @for (message of chatState.messages(); track message.id) {
             <li [class]="'chat__message ' + getTypeName(message.type)" #scrollItem>
-                @if (message.user) { 
-                    <div class="chat-author">
-                        @if (message.user.avatarUrl) {
-                            <app-avatar [src]="message.user.avatarUrl" alt="User Avatar" size="small" />
-                        } 
-                        
-                        <span class="chat-author__display-name" [style.color]="message.user.displayColor">
-                            [{{message.user.displayName }}]:
+                @if (message.sender) { 
+                    @if (message.type === MessageType.Whisper) {
+                        <span>
+                            <span class="chat-author__display-name" [style.color]="message.sender.displayColor">
+                                [{{message.sender.displayName }}]
+                            </span>
+                            >
+                            <span class="chat-author__display-name" [style.color]="message.receiver?.displayColor">
+                                [{{message.receiver?.displayName }}]
+                            </span>
                         </span>
-                    </div>
+                    } 
+                    @else {
+                        <div class="chat-author">
+                            @if (message.sender.avatarUrl) {
+                            <app-avatar [src]="message.sender.avatarUrl" alt="User Avatar" size="small" />
+                            }
+                        
+                            <span class="chat-author__display-name" [style.color]="message.sender.displayColor">
+                                [{{message.sender.displayName }}]:
+                            </span>
+                        </div>
+                    }
                 }
 
                 <span class="chat__message-content"> 

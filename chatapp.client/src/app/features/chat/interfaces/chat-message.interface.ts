@@ -12,6 +12,7 @@ export interface ChatMessage {
     id: number;
     type: MessageType;
     timestamp: Date;
-    user?: UserSummary;
+    sender?: UserSummary;
+    receiver?: UserSummary;
     content: string;
 }

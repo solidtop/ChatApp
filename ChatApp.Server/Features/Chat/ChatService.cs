@@ -54,9 +54,10 @@ public class ChatService(
 
     public async Task SendWhisperAsync(string senderId, string recipientName, string content)
     {
+        var sender = await GetUserByIdOrThrow(senderId);
         var recipient = await GetUserByNameOrThrow(recipientName);
         ValidateContent(content);
-        var whisper = new ChatMessage(MessageType.Whisper, recipient, content);
+        var whisper = new ChatMessage(MessageType.Whisper, sender, recipient, content);
 
         await _hub.Clients.User(senderId).SendAsync("ReceiveMessage", whisper);
         await _hub.Clients.User(recipient.Id).SendAsync("ReceiveMessage", whisper);

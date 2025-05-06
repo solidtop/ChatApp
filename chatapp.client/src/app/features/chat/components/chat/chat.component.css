@@ -12,6 +12,10 @@
     padding: 5px;
     overflow: hidden;
 
+    &.whisper .chat__message-content {
+        font-style: italic;
+    }
+
     &.notification .chat__message-content {
         color: orange;
     }

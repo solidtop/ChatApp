@@ -9,7 +9,8 @@ public class ChatMessage
     public int Id => _counter++;
     public MessageType Type { get; }
     public DateTime Timestamp => DateTime.UtcNow;
-    public UserSummary? User { get; }
+    public UserSummary? Sender { get; }
+    public UserSummary? Receiver { get; }
     public string Content { get; }
 
     public ChatMessage(MessageType type, string content)
@@ -18,10 +19,18 @@ public class ChatMessage
         Content = content;
     }
 
-    public ChatMessage(MessageType type, UserSummary? user, string content)
+    public ChatMessage(MessageType type, UserSummary sender, string content)
     {
         Type = type;
-        User = user;
+        Sender = sender;
+        Content = content;
+    }
+
+    public ChatMessage(MessageType type, UserSummary sender, UserSummary receiver, string content)
+    {
+        Type = type;
+        Sender = sender;
+        Receiver = receiver;
         Content = content;
     }
 }
